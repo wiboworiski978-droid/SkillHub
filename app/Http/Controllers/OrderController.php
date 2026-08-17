@@ -43,4 +43,22 @@ class OrderController extends Controller
             'data' => $order
         ], 201);
     }
+
+    //melihat order milik user yang sedang login
+    public  function index(Request $request)
+    {
+        $orders = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buuyer_id', $request->user()->id)
+        ->latest()
+        ->get;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data order berhasil diambil',
+            'data' => $orders
+        ]);
+    }
 }
