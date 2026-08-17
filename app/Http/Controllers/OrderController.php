@@ -61,4 +61,27 @@ class OrderController extends Controller
             'data' => $orders
         ]);
     }
+    //melihat detail orderan
+    public function show(Request $request, $id)
+    {
+        $order = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buyer_id', $request->user()->id)
+        ->find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail order berhasil diambil',
+            'data' => $order
+        ]);
+    }
 }
