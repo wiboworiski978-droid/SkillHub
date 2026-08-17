@@ -127,4 +127,43 @@ class OrderController extends Controller
             'data' => $order
         ]);
     }
+
+    //mengubah orderan menjadi in progress
+    public function startOrder(Request $request, $id)
+    {
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan'
+            ], 404);
+        }
+
+        //hanya pemilik jasa yang boleh memulai pengerjaan
+        if ($order->service->user_id !== $request->user()->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk memulai order ini'
+            ], 403);
+        }
+
+        //Order harus accepted terlebih dahulu 
+        if ($order->status !== 'accepted') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order harus berstatus accepted terlebih dahulu'
+            ], 404);
+        }
+
+        $order->update([
+            'status' => 'in_progress'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order sedang dikerjakan',
+            'data' => $order
+        ]);
+    }
 }
