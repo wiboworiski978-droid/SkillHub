@@ -84,4 +84,47 @@ class OrderController extends Controller
             'data' => $order
         ]);
     }
+
+    //menerima atau menolak order
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan'
+            ], 404);
+        }
+
+        //hanya pemilik jasa yanng boleh menerima/menolak
+        if ($order->service->user_id !== $request->user()->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk mengubah order ini'
+            ], 403);
+        }
+
+        //order hanya boleh diubah jika masih pending
+        if ($order->status !== 'pending') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order sudah tidak berstatus pending'
+            ], 400);
+        }
+
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status order berhasil diubah',
+            'data' => $order
+        ]);
+    }
 }
