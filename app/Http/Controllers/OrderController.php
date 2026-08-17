@@ -51,9 +51,9 @@ class OrderController extends Controller
             'service.user',
             'service.category'
         ])
-        ->where('buuyer_id', $request->user()->id)
+        ->where('buyer_id', $request->user()->id)
         ->latest()
-        ->get;
+        ->get();
 
         return response()->json([
             'success' => true,
