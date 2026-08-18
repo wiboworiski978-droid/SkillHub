@@ -166,4 +166,42 @@ class OrderController extends Controller
             'data' => $order
         ]);
     }
+
+    public function completeOrder(Request $request, $id)
+    {
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan'
+            ], 404);
+        }
+
+        //hanya pemilik jasa 
+        if ($order->service->user_id !== $request->user()->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk menyelesaikanorde ini'
+            ], 403);
+        }
+
+        //Harus sedang dikerjakan
+        if ($order->status !== 'in_progress') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order berstatus in_progress terlebih dahulu'
+            ], 400);
+        }
+
+        $order->update([
+            'status'=> 'complete'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order berhasil diselesaikan',
+            'data' => $order
+        ]);
+    }
 }
