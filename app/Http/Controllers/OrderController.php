@@ -226,7 +226,7 @@ class OrderController extends Controller
         }
 
         //order yang sudah selesai atau ditolak tidak bisa dibatalkan
-        if (in_array($order->status, ['complete', 'rejected', 'canceller'])) {
+        if (in_array($order->status, ['complete', 'rejected', 'cancelled'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Order sudah tidak dapat dibatalkan'
@@ -241,6 +241,29 @@ class OrderController extends Controller
             'success' => true,
             'message' => 'Order berhasil dibatalkan',
             'data' => $order
+        ]);
+    }
+
+    //melihat riwayat order
+    public function history(Request $request)
+    {
+        $orders = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buyer_id', $request->user()->id)
+        ->whereIn('status', [
+            'complete',
+            'rejected',
+            'cancelled'
+        ])
+        ->latest()
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Riwayat order berhasil diambil',
+            'data' => $orders
         ]);
     }
 }
