@@ -204,4 +204,43 @@ class OrderController extends Controller
             'data' => $order
         ]);
     }
+
+    //membatalkan orderan
+    public function cancelOrder(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan'
+            ], 404);
+        }
+
+        //hanya buyer yang membuat order boleh membatalkan
+        if ($order->buyer_id !== $request->user()->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk membatalkan order ini'
+            ], 403);
+        }
+
+        //order yang sudah selesai atau ditolak tidak bisa dibatalkan
+        if (in_array($order->status, ['complete', 'rejected', 'canceller'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order sudah tidak dapat dibatalkan'
+            ], 400);
+        }
+
+        $order->update([
+            'status' => 'cancelled'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order berhasil dibatalkan',
+            'data' => $order
+        ]);
+    }
 }
