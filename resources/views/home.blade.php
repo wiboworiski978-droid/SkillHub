@@ -27,6 +27,14 @@
 
     </div>
 
+    <form method="POST" action="/logout">
+    @csrf
+
+    <button type="submit" class="btn">
+        Logout
+    </button>
+</form>
+
 </div>
 
 @endsection

@@ -11,7 +11,10 @@ Route::get('/', function () {
 
     return view('home');
 });
-
+//login
 Route::get('/login', [AuthController::class, 'showLogin']);
 
 Route::post('/login', [AuthController::class, 'webLogin']);
+
+//logout
+Route::post('/logout', [AuthController::class, 'webLogout']);

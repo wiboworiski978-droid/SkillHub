@@ -96,6 +96,18 @@ class AuthController extends Controller
     return redirect('/');
     }
 
+    //frontend logout
+    public function webLogout(Request $request)
+    {
+        $request->session()->forget([
+            'user_id',
+            'username',
+            'role',
+        ]);
 
+        $request->session()->regenerate();
+
+        return redirect('/login');
+    }
 }
 
