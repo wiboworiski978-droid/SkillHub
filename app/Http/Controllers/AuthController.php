@@ -63,4 +63,39 @@ class AuthController extends Controller
             'message' => 'Logout berhasil',
         ]);
     }
+
+    //frontend
+    public function showLogin()
+    {
+         return view('auth.login');
+    }
+//frontend login
+    public function webLogin(Request $request)
+    {
+        $request->validate([
+        'username' => 'required',
+        'password' => 'required',
+    ]);
+
+    $user = User::where('username', $request->username)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return back()
+            ->withErrors([
+                'username' => 'Username atau password salah'
+            ])
+            ->withInput();
+    }
+
+    session([
+        'user_id' => $user->id,
+        'username' => $user->username,
+        'role' => $user->role,
+    ]);
+
+    return redirect('/');
+    }
+
+
 }
+
