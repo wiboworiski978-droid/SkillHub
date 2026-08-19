@@ -282,4 +282,32 @@ class OrderController extends Controller
 
         return view('orders.create', compact('service'));
     }
+
+    //mengisi form order
+    public function webStore(Request $request)
+    {
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+            'requirements' => 'required|string',
+            'deadline' => 'required|date',
+            'notes' => 'nullable|string',
+        ]);
+
+        $service = Service::find($request->service_id);
+
+        if ($service->user_id === session('user_id')) {
+            return back()->withErrors([
+                'order' => 'Anda tidak bisa memesan jasa sendiri'
+            ]);
+        }
+
+        if ($service->status !== 'active') {
+            return back()->withErrors([
+                'order' => 'Jasa ini sedang tidak aktif'
+            ]); 
+
+            return redirect('/orders')
+                ->with('success', 'Order berhasil dibuat');
+        }
+    }
 }

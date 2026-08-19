@@ -28,3 +28,5 @@ Route::get('/services', [ServiceController::class, 'webIndex']);
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 //order jasa
 Route::get('/services/{id}/order', [OrderController::class, 'webCreate']);
+//membuat orderan
+Route::post('/services/{id}/order', [OrderController::class, 'webStore']);
