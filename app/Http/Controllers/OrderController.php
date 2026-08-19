@@ -310,4 +310,35 @@ class OrderController extends Controller
                 ->with('success', 'Order berhasil dibuat');
         }
     }
+
+    //nampilin semua orderann milik user
+    public function webIndex()
+    {
+        $orders = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buyer_id', session('user_id'))
+        ->latest()
+        ->get();
+
+        return view('orders.index', compact('orders'));
+    }
+
+    //front end detail order
+    public function webShow($id)
+    {
+        $order = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buyer_id', session('user_id'))
+        ->find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        return view('orders.show', compact('order'));
+    }
 }

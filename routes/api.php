@@ -70,5 +70,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/orders/{id}/complete', [OrderController::class, 'completeOrder']);
     Route::put('/orders/{id}/cancel', [OrderController::class, 'cancelOrder']);
     Route::get('/orders/history', [OrderController::class, 'history']);
+    
     });
 

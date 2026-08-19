@@ -7,7 +7,7 @@
 <div class="hero">
 
     <h1>
-        Selamat datang, {{ session('username') }}!
+        Selamat datang,  {{ Auth::user()?->username }}!
     </h1>
 
     <p>

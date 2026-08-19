@@ -30,3 +30,6 @@ Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 Route::get('/services/{id}/order', [OrderController::class, 'webCreate']);
 //membuat orderan
 Route::post('/services/{id}/order', [OrderController::class, 'webStore']);
+Route::get('/orders', [OrderController::class, 'webIndex']);
+//detail order
+Route::get('/orders/{id}', [OrderController::class, 'webShow']);
