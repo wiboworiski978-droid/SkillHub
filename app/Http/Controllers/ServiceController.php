@@ -212,4 +212,13 @@ class ServiceController extends Controller
             'data' => $service
         ]);
     }
+
+    //front end explore services
+    public function webIndex()
+    {
+        $services = Service::with(['user', 'category'])
+            ->latest()
+            ->get();
+        return view('services.index', compact('services'));
+    }
 }

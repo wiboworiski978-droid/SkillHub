@@ -17,7 +17,7 @@
 
     <div class="hero-buttons">
 
-        <a href="#" class="btn">
+        <a href="/services" class="btn">
             Jelajahi Jasa
         </a>
 
