@@ -221,4 +221,16 @@ class ServiceController extends Controller
             ->get();
         return view('services.index', compact('services'));
     }
+
+    //front end detail jasa
+    public function webShow($id)
+    {
+        $service = Service::with(['user', 'category'])->find($id);
+
+        if (!$service) {
+            abort(404, 'Jasa tidak ditmukan');
+        }
+
+        return view('services.show', compact('service'));
+    }
 }

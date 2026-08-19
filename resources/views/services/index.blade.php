@@ -1,4 +1,4 @@
- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Explore Jasa - SkillHub')
 
@@ -16,29 +16,34 @@
 
     <div class="service-grid">
 
-        {{-- Data jasa nanti ditampilkan di sini --}}
+        {{-- Lakukan perulangan data dari controller di sini --}}
+        @foreach($services as $service)
+            
+            <div class="service-card">
 
-        <div class="service-card">
+                {{-- Idealnya, data di bawah ini juga dibuat dinamis mengikuti isi database --}}
+                <h2>{{ $service->nama_jasa ?? 'Jasa Pembuatan Website' }}</h2>
 
-            <h2>Jasa Pembuatan Website</h2>
+                <p class="service-description">
+                    {{ $service->deskripsi ?? 'Jasa pembuatan website menggunakan Laravel.' }}
+                </p>
 
-            <p class="service-description">
-                Jasa pembuatan website menggunakan Laravel.
-            </p>
+                <p class="service-price">
+                    Rp{{ number_format($service->harga ?? 500000, 0, ',', '.') }}
+                </p>
 
-            <p class="service-price">
-                Rp500.000
-            </p>
+                <p>
+                    Kategori: {{ $service->kategori ?? 'Web Development' }}
+                </p>
 
-            <p>
-                Kategori: Web Development
-            </p>
+                {{-- Error sebelumnya terjadi di baris ini karena $service belum didefinisikan --}}
+                <a href="/services/{{ $service->id }}" class="btn">
+                    Lihat Detail
+                </a>
 
-            <a href="#" class="btn">
-                Lihat Detail
-            </a>
+            </div>
 
-        </div>
+        @endforeach
 
     </div>
 

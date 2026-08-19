@@ -23,3 +23,5 @@ Route::post('/logout', [AuthController::class, 'webLogout']);
 
 //explore services
 Route::get('/services', [ServiceController::class, 'webIndex']);
+//detail jasa
+Route::get('/services/{id}', [ServiceController::class, 'webShow']);
