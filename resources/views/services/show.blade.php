@@ -42,9 +42,9 @@
     <br>
 
     @if ($service->status === 'active')
-        <a href="#" class="btn">
-            Pesan Jasa
-        </a>
+    <a href="/services/{{ $service->id }}/order" class="btn">
+        Pesan Jasa
+    </a>
     @else
         <p>Jasa ini sedang tidak tersedia.</p>
     @endif

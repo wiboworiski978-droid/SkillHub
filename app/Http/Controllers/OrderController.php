@@ -266,4 +266,20 @@ class OrderController extends Controller
             'data' => $orders
         ]);
     }
+
+    //front end order
+    public function webCreate($serviceId)
+    {
+        $service = Service::with(['user', 'category'])->find($serviceId);
+
+        if (!$service) {
+            abort(404);
+        }
+
+        if ($service->status !== 'active') {
+            abort(404);
+        }
+
+        return view('orders.create', compact('service'));
+    }
 }
