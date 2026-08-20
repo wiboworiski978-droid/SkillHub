@@ -4,36 +4,102 @@
 
 @section('content')
 
-<div class="hero">
+<div class="home-container">
 
-    <h1>
-        Selamat datang,  {{ Auth::user()?->username }}!
-    </h1>
+    <section class="hero">
 
-    <p>
-        Selamat datang di SkillHub.
-        Temukan jasa dan skill yang kamu butuhkan.
-    </p>
+        <h1>
+            Selamat datang di SkillHub
+        </h1>
 
-    <div class="hero-buttons">
+        <p>
+            Temukan jasa dan skill yang kamu butuhkan.
+        </p>
 
         <a href="/services" class="btn">
-            Jelajahi Jasa
+            Explore Jasa
         </a>
 
-        <a href="#" class="btn secondary">
-            Profile
+    </section>
+
+
+    <section class="services-section">
+
+        <h2>
+            Jasa Terbaru
+        </h2>
+
+        @if ($services->count() > 0)
+
+            <div class="services-grid">
+
+                @foreach ($services as $service)
+
+                    <div class="service-card">
+
+                        <h3>
+                            {{ $service->title }}
+                        </h3>
+
+                        <p>
+                            {{ Str::limit($service->description, 100) }}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Rp {{ number_format($service->price, 0, ',', '.') }}
+                            </strong>
+                        </p>
+
+                        <p>
+                            Kategori:
+                            {{ $service->category->name }}
+                        </p>
+
+                        <p>
+                            Pemilik:
+                            {{ $service->user->username }}
+                        </p>
+
+                        <a
+                            href="/services/{{ $service->id }}"
+                            class="btn"
+                        >
+                            Lihat Detail
+                        </a>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+        @else
+
+            <p>
+                Belum ada jasa yang tersedia.
+            </p>
+
+        @endif
+
+    </section>
+
+
+    <section class="order-section">
+
+        <h2>
+            Order Saya
+        </h2>
+
+        <p>
+            Lihat dan kelola order yang kamu buat.
+        </p>
+
+        <a href="/orders" class="btn">
+            Lihat Order Saya
         </a>
 
-    </div>
-
-    <form method="POST" action="/logout">
-    @csrf
-
-    <button type="submit" class="btn">
-        Logout
-    </button>
-</form>
+    </section>
 
 </div>
 

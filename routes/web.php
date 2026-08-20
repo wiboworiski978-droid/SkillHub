@@ -4,32 +4,33 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
-use App\Models\Service;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
+// Home
+Route::get('/', [HomeController::class, 'index']);
 
-    if (!session()->has('user_id')) {
-        return redirect('/login');
-    }
-
-    return view('home');
-});
-//login
+// Login
 Route::get('/login', [AuthController::class, 'showLogin']);
-
 Route::post('/login', [AuthController::class, 'webLogin']);
 
-//logout
+// Logout
 Route::post('/logout', [AuthController::class, 'webLogout']);
 
-//explore services
+// Explore Services
 Route::get('/services', [ServiceController::class, 'webIndex']);
-//detail jasa
+
+// Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
-//order jasa
+
+// Order Jasa
 Route::get('/services/{id}/order', [OrderController::class, 'webCreate']);
-//membuat orderan
 Route::post('/services/{id}/order', [OrderController::class, 'webStore']);
+
+// Order Saya
 Route::get('/orders', [OrderController::class, 'webIndex']);
-//detail order
+
+// Detail Order
 Route::get('/orders/{id}', [OrderController::class, 'webShow']);
+
+// Cancel Order
+Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);

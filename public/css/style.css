@@ -1,3 +1,6 @@
+/* =========================================
+   Reset & Base Styles
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -5,173 +8,69 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc; /* Warna background abu-abu sangat terang */
+    color: #334155;
+    line-height: 1.6;
 }
 
-.navbar {
+/* =========================================
+   Navigation Bar (Navbar)
+   ========================================= */
+nav {
+    background-color: #ffffff;
+    padding: 1rem 5%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-
-    padding: 20px 60px;
-
-    background: white;
-    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.nav-links {
-    display: flex;
-    gap: 25px;
-}
-
-.nav-links a {
+/* Styling untuk semua link di dalam nav */
+nav a {
     text-decoration: none;
-    color: #222;
-}
-
-.auth-container {
-    min-height: 80vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-}
-
-.auth-card {
-    width: 100%;
-    max-width: 400px;
-
-    background: white;
-
-    padding: 35px;
-
-    border-radius: 10px;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-.auth-card h1 {
-    margin-bottom: 10px;
-}
-
-.auth-card > p {
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid #ccc;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
-
-    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
-.btn {
-    display: inline-block;
-
-    padding: 12px 24px;
-
-    background: #222;
-    color: white;
-
-    border: none;
-    border-radius: 6px;
-
-    text-decoration: none;
-
-    cursor: pointer;
+/* Efek ketika kursor diarahkan ke link menu */
+nav a:hover {
+    background-color: #3b82f6; /* Warna biru */
+    color: #ffffff;
 }
 
-.login-btn {
-    width: 100%;
-    font-size: 16px;
+/* Styling Khusus Tulisan "SkillHub" (Logo) */
+nav a:first-child {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2563eb; /* Biru yang lebih gelap untuk logo */
+    margin-right: auto; /* Mendorong menu lain ke sebelah kanan */
+    padding-left: 0;
+    letter-spacing: -0.5px;
 }
 
-.auth-link {
-    text-align: center;
-    margin-top: 20px;
+/* Hilangkan efek kotak biru saat logo di-hover */
+nav a:first-child:hover {
+    background-color: transparent;
+    color: #1d4ed8;
 }
 
-.auth-link a {
-    color: #222;
-    font-weight: bold;
-}
-
-.error-message {
-    margin-bottom: 15px;
-    padding: 10px;
-
-    background: #ffe5e5;
-
-    border-radius: 6px;
-}
-
-/* explore services */
-.services-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-.services-header {
-    margin-bottom: 30px;
-}
-
-.services-header h1 {
-    margin-bottom: 10px;
-}
-
-.services-header p {
-    color: #666;
-}
-
-.service-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.service-card {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.service-card h2 {
-    margin-bottom: 15px;
-}
-
-.service-description {
-    color: #666;
-    margin-bottom: 15px;
-}
-
-.service-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
+/* =========================================
+   Main Content Area
+   ========================================= */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    min-height: 80vh; /* Menjaga agar halaman tidak terlihat kosong jika kontennya sedikit */
 }

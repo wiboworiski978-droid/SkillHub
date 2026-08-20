@@ -341,4 +341,37 @@ class OrderController extends Controller
 
         return view('orders.show', compact('order'));
     }
+
+    //front end cancel order
+    public function webCancel(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        //Hanya buyer yang membuat order yang boleh membatalkan
+        if ($order->buyer_id !== session('user_id')) {
+            abort(403);
+        }
+
+        //order yang sudah tidak bisa dibatalkan
+        if (in_array($order->status, [
+            'complete',
+            'rejected',
+            'cancelled'
+        ])) {
+            return back()->withErrors([
+                'order' => 'Order sudah tidak ditemukan'
+            ]);
+        }
+
+        $order->update([
+            'status' => 'cancelled'
+        ]);
+
+        return redirect('/order/' . $order->id)
+            ->with('success', 'Order berhasil dibatalkan');
+    }
 }

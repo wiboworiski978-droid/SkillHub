@@ -4,6 +4,14 @@
 
 @section('content')
 
+@if (session('success'))
+
+    <div class="success-message">
+        {{ session('success') }}
+    </div>
+
+@endif
+
 <div class="service-detail">
 
     <h1>Detail Order</h1>
@@ -60,6 +68,25 @@
     <a href="/orders" class="btn">
         Kembali ke Order
     </a>
+
+@if (in_array($order->status, ['pending', 'accepted', 'in_progress']))
+
+    <form
+        method="POST"
+        action="/orders/{{ $order->id }}/cancel"
+        style="margin-top: 10px;"
+        onsubmit="return confirm('Yakin ingin membatalkan order ini?')"
+    >
+
+        @csrf
+
+        <button type="submit" class="btn">
+            Batalkan Order
+        </button>
+
+    </form>
+
+@endif
 
 </div>
 
