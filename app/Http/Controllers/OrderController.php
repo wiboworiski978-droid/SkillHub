@@ -268,16 +268,19 @@ class OrderController extends Controller
     }
 
     //front end order
-    public function webCreate($serviceId)
+    public function webCreate($id)
     {
-        $service = Service::with(['user', 'category'])->find($serviceId);
+        $service = Service::with(['user', 'category'])->find($id);
 
         if (!$service) {
             abort(404);
         }
 
         if ($service->status !== 'active') {
-            abort(404);
+            return redirect('/services/' . $id)
+                ->withErrors([
+                    'service' => 'Jasa ini sedang tidak aktif'
+                ]);
         }
 
         return view('orders.create', compact('service'));
@@ -295,20 +298,31 @@ class OrderController extends Controller
 
         $service = Service::find($request->service_id);
 
+        //tidak boleh memesan jasa sendiri
         if ($service->user_id === session('user_id')) {
             return back()->withErrors([
                 'order' => 'Anda tidak bisa memesan jasa sendiri'
-            ]);
+            ])->withInput();
         }
 
+        //jasa harus aktiv
         if ($service->status !== 'active') {
             return back()->withErrors([
                 'order' => 'Jasa ini sedang tidak aktif'
-            ]); 
-
-            return redirect('/orders')
-                ->with('success', 'Order berhasil dibuat');
+            ])->withInput(); 
         }
+
+        $order = Order::create([
+            'buyer_id' => session('user_id'),
+            'service_id' => $request->service_id,
+            'requirements' => $request->requirements,
+            'deadline' => $request->deadline,
+            'notes' => $request->notes,
+            'status' => 'pending',
+        ]);
+
+        return redirect('/orders/' . $order->id)
+            ->with('success', 'Order berhasil dibuat');
     }
 
     //nampilin semua orderann milik user
@@ -363,7 +377,7 @@ class OrderController extends Controller
             'cancelled'
         ])) {
             return back()->withErrors([
-                'order' => 'Order sudah tidak ditemukan'
+                'order' => 'Order sudah tidak dapat dibatalkan'
             ]);
         }
 
@@ -371,7 +385,7 @@ class OrderController extends Controller
             'status' => 'cancelled'
         ]);
 
-        return redirect('/order/' . $order->id)
+        return redirect('/orders/' . $order->id)
             ->with('success', 'Order berhasil dibatalkan');
     }
 }
