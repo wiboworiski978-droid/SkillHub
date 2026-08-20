@@ -405,4 +405,62 @@ class OrderController extends Controller
 
         return view('orders.incoming', compact('orders'));
     }
+
+    //frontend detail order masuk
+    public function webIncomingShow($id)
+    {
+        $order = Order::with([
+            'service',
+            'service.category',
+            'buyer'
+        ])
+        ->whereHas('service', function ($query) {
+            $query->where('user_id', session('user_id'));
+        })
+        ->find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        return view('orders.incoming-show', compact('order'));
+    }
+
+    //frontend terima atau tolak order
+    public function webUpdateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        //hanya pemilik jasa yang boleh mengubah status
+        if ($order->service->user_id !== session('user_id')) {
+            abort(403);
+        }
+
+        //hanya order pending yang boleh diterima / ditolak
+        if ($order->status !== 'pending') {
+            return back()->withErrors([
+                'order' => 'Order sudah tidak berstatus pending'
+            ]);
+        }
+
+        $order->update([
+            'status' => $request->status
+        ]);
+
+        return redirect('/orders/incoming/' . $order->id)
+            ->with(
+                'success',
+                $request->status === 'accepted'
+                    ? 'Order berhasil diterima'
+                    : 'Order berhasil ditolak'
+            );
+    }
 }

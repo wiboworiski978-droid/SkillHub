@@ -23,6 +23,14 @@ Route::get('/services', [ServiceController::class, 'webIndex']);
 //pemilik jasa harus bisa  melihat siapa yang order jasanya
 Route::get('/orders/incoming', [OrderController::class, 'webIncoming']);
 
+//detail order masuk
+Route::get('/orders/incoming/{id}', [OrderController::class, 'webIncomingShow']);
+
+//terima /tolak order
+Route::post(
+    '/orders/incoming/{id}/status',
+    [OrderController::class, 'webUpdateStatus']
+);
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 
