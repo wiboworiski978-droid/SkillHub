@@ -39,4 +39,16 @@ class ProfileController extends Controller
             'data' => $user
         ]);
     }
+
+    //front end profile
+    public function webShow()
+    {
+        $user =\App\Models\User::find(session('user_id'));
+
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        return view('profile.show', compact('user'));
+    }
 }

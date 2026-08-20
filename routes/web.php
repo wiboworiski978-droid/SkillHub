@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
@@ -34,3 +35,6 @@ Route::get('/orders/{id}', [OrderController::class, 'webShow']);
 
 // Cancel Order
 Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);
+
+//profil
+Route::get('/profile', [ProfileController::class, 'webShow']);

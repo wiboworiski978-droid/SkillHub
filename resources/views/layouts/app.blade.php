@@ -19,6 +19,8 @@
 
     <a href="/orders">Order Saya</a>
 
+    <a href="/profile">Profile</a>
+
 </nav>
 
 <main>
