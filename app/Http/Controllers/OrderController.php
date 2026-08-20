@@ -388,4 +388,21 @@ class OrderController extends Controller
         return redirect('/orders/' . $order->id)
             ->with('success', 'Order berhasil dibatalkan');
     }
+
+    //frontend pemilik jasa harus bisa melihat siapa yang
+    //memesan jasanya
+    public function webIncoming()
+    {
+        $orders = Order::with([
+            'service',
+            'buyer'
+        ])
+        ->whereHas('service', function ($query) {
+            $query->where('user_id', session('user_id'));
+        })
+        ->latest()
+        ->get();
+
+        return view('orders.incoming', compact('orders'));
+    }
 }

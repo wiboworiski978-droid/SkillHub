@@ -20,6 +20,9 @@ Route::post('/logout', [AuthController::class, 'webLogout']);
 // Explore Services
 Route::get('/services', [ServiceController::class, 'webIndex']);
 
+//pemilik jasa harus bisa  melihat siapa yang order jasanya
+Route::get('/orders/incoming', [OrderController::class, 'webIncoming']);
+
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 
@@ -38,3 +41,4 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);
 
 //profil
 Route::get('/profile', [ProfileController::class, 'webShow']);
+
