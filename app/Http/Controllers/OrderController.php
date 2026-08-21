@@ -463,4 +463,66 @@ class OrderController extends Controller
                     : 'Order berhasil ditolak'
             );
     }
+
+    //frontend mulai pengerjaan
+    public function webStartOrder($id)
+    {
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        //hanya pemilik jasa
+        if ($order->service->user_id !== session('user_id')) {
+            abort(403);
+        }
+
+        //harus berstatus accepted
+        if ($order->status !== 'accepted') {
+            return back()->withErrors([
+                'order' => 'Order harus berstatus accepted terlebih dahulu'
+            ]);
+        }
+
+        $order->update([
+            'status' => 'in_progress'
+        ]);
+
+        return back()->with(
+            'success',
+            'Order sedang dikerjakan'
+        );
+    }
+
+    //frontend penyelesaian orderan
+    public function webCompleteOrder($id)
+    {
+        $order = Order::with('service')->find($id);
+
+        if (!$order) {
+            abort(404);
+        }
+
+        //hanya pemilik jasa 
+        if ($order->service->user_id !== session('user_id')) {
+            abort(403);
+        }
+
+        //harus berstatus sedang dikerjakan
+        if ($order->status !== 'in_progress') {
+            return back()->withErrors([
+                'order' => 'Order harus berstatus in_progress terlebih dahulu'
+            ]);
+        }
+
+        $order->update([
+            'status' => 'complete'
+        ]);
+
+        return back()->with(
+            'success',
+            'Order berhasil diselesaikan'
+        );
+    }
 }

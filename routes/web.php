@@ -31,6 +31,13 @@ Route::post(
     '/orders/incoming/{id}/status',
     [OrderController::class, 'webUpdateStatus']
 );
+
+//mulai pengerjaan
+Route::post('/orders/incoming/{id}/start', [OrderController::class, 'webStartOrder']);
+
+//selesaikan order
+Route::post('/orders/incoming/{id}/complete', [OrderController::class, 'webCompleteOrder']);
+
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 

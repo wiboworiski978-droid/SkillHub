@@ -131,6 +131,37 @@
 
     @endif
 
+    @if ($order->status === 'accepted')
+
+    <form
+        method="POST"
+        action="/orders/incoming/{{ $order->id }}/start"
+    >
+        @csrf
+
+        <button type="submit" class="btn">
+            Mulai Pengerjaan
+        </button>
+    </form>
+
+@endif
+
+
+@if ($order->status === 'in_progress')
+
+    <form
+        method="POST"
+        action="/orders/incoming/{{ $order->id }}/complete"
+    >
+        @csrf
+
+        <button type="submit" class="btn">
+            Selesaikan Order
+        </button>
+    </form>
+
+@endif
+
     <br>
 
     <a href="/orders/incoming" class="btn">
