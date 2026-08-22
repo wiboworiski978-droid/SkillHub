@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -242,5 +243,36 @@ class ServiceController extends Controller
             ->get();
 
         return view('services.my-services', compact('services'));
+    }
+
+    //front end form buat jasa
+    public function webCreate() {
+        $categories = Category::all();
+
+        return view('services.create', compact('categories'));
+    }
+
+    //front end minyimpan jasa
+    public function webStore(Request $request) {
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'estimated_days' => 'required|integer|min:1',
+        ]);
+
+        Service::create([
+            'user_id' => session('user_id'),
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'estimated_days' => $request->estimated_days,
+            'status' => 'active',
+        ]);
+
+        return redirect('/my-services')
+            ->with('success', 'Jasa berhasil dibuat');
     }
 }

@@ -41,6 +41,13 @@ Route::post('/orders/incoming/{id}/complete', [OrderController::class, 'webCompl
 //riwayat order
 Route::get('/orders/history', [OrderController::class, 'webHistory']);
 
+//jasa saya
+Route::get('/my-services', [ServiceController::class, 'myService']);
+
+//buat jasa
+Route::get('/services/create', [ServiceController::class, 'webCreate']);
+Route::post('services', [ServiceController::class, 'webStore']);
+
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 
@@ -60,5 +67,3 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);
 //profil
 Route::get('/profile', [ProfileController::class, 'webShow']);
 
-//jasa saya
-Route::get('/my-services', [ServiceController::class, 'myService']);

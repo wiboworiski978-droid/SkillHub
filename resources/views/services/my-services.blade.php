@@ -8,6 +8,14 @@
 
     <h1>Jasa Saya</h1>
 
+    @if (session('success'))
+
+    <div class="success-message">
+        {{ session('success') }}
+    </div>
+
+@endif
+
     <a href="/services/create" class="btn">
         + Buat Jasa
     </a>
