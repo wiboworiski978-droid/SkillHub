@@ -3,175 +3,272 @@
 @section('title', 'Pesan Jasa - SkillHub')
 
 @section('content')
-
 <style>
-    .auth-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 80vh;
-        background-color: #f4f7f6;
-        padding: 2rem 1rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    /* =========================================
+   STYLE KHUSUS HALAMAN PESAN JASA (CHECKOUT)
+   ========================================= */
 
-    .auth-card {
-        background: #ffffff;
-        padding: 2.5rem;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        width: 100%;
-        max-width: 500px;
-    }
+/* --- Layout Utama --- */
+.checkout-container {
+    max-width: 800px; /* Lebar yang ideal untuk form berparagraf panjang */
+    margin: 40px auto 80px auto;
+    padding: 0 20px;
+    font-family: 'Inter', system-ui, sans-serif;
+}
 
-    .auth-card h1 {
-        font-size: 1.8rem;
-        color: #2c3e50;
-        margin-bottom: 0.25rem;
+.checkout-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.checkout-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
+}
+
+.checkout-header p {
+    color: #6b7280;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+/* --- Card Konten --- */
+.checkout-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+/* --- Bagian Ringkasan (Atas) --- */
+.checkout-summary {
+    background-color: #f9fafb;
+    padding: 24px 32px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.summary-badge {
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    line-height: 1.3;
+}
+
+.summary-details h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.summary-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.summary-owner {
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.summary-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+/* --- Area Form --- */
+.checkout-form-section {
+    padding: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.text-danger { color: #ef4444; }
+.text-muted { color: #9ca3af; font-size: 0.85rem; font-weight: normal; margin-top: 6px; }
+
+/* --- Input Styling --- */
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #111827;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+.form-control::placeholder { color: #9ca3af; }
+
+.form-control.is-invalid {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.error-msg {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+/* --- Tombol Aksi --- */
+.checkout-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Responsif (HP) */
+@media (max-width: 640px) {
+    .checkout-summary {
+        flex-direction: column;
         text-align: center;
-        font-weight: 700;
     }
-
-    .auth-card h2 {
-        font-size: 1.1rem;
-        color: #7f8c8d;
-        margin-bottom: 1.5rem;
+    
+    .summary-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .checkout-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .checkout-actions .btn {
+        width: 100%;
         text-align: center;
-        font-weight: 500;
     }
-
-    .service-info {
-        background: #f8f9fa;
-        padding: 1rem 1.25rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        border-left: 4px solid #3498db;
-    }
-
-    .service-info p {
-        margin: 0.4rem 0;
-        color: #444;
-        font-size: 0.95rem;
-    }
-
-    .service-info strong {
-        color: #2c3e50;
-        font-weight: 600;
-    }
-
-    .form-group {
-        margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #34495e;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #dcdde1;
-        border-radius: 6px;
-        font-size: 1rem;
-        color: #2f3640;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-        font-family: inherit;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-    }
-
-    textarea.form-control {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    .btn {
-        display: block;
-        width: 100%;
-        padding: 0.85rem;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 1.05rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.1s ease;
-        margin-top: 2rem;
-    }
-
-    .btn:hover {
-        background-color: #2980b9;
-    }
-
-    .btn:active {
-        transform: scale(0.98);
-    }
+}
 </style>
+<div class="checkout-container">
+    
+    <div class="checkout-header">
+        <h1>Formulir Pemesanan</h1>
+        <p>Isi detail kebutuhanmu dengan jelas agar freelancer dapat memberikan hasil yang maksimal.</p>
+    </div>
 
-<div class="auth-container">
-    <div class="auth-card">
-        <h1>Pesan Jasa</h1>
-        <h2>{{ $service->title }}</h2>
-
-        <div class="service-info">
-            <p><strong>Pemilik:</strong> {{ $service->user->username }}</p>
-            <p><strong>Harga:</strong> Rp {{ number_format($service->price, 0, ',', '.') }}</p>
+    <div class="checkout-content">
+        
+        {{-- Bagian 1: Ringkasan Jasa yang Dipesan --}}
+        <div class="checkout-summary">
+            <div class="summary-badge">
+                {{ $service->category->name ?? 'Jasa' }}
+            </div>
+            <div class="summary-details">
+                <h2>{{ $service->title }}</h2>
+                <div class="summary-meta">
+                    <span class="summary-owner">👤 {{ $service->user->username }}</span>
+                    <span class="summary-price">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                </div>
+            </div>
         </div>
 
-        <form method="POST" action="/services/{{ $service->id }}/order">
-            @csrf
-            
-            <!-- Hidden Input dipisah agar struktur HTML lebih rapi -->
-            <input type="hidden" name="service_id" value="{{ $service->id }}">
+        {{-- Bagian 2: Formulir Kebutuhan --}}
+        <div class="checkout-form-section">
+            <form method="POST" action="{{ url('/services/' . $service->id . '/order') }}">
+                @csrf
+                <input type="hidden" name="service_id" value="{{ $service->id }}">
 
-            <div class="form-group">
-                <label for="requirements">Kebutuhan</label>
-                <textarea
-                    id="requirements"
-                    name="requirements"
-                    class="form-control"
-                    rows="4"
-                    placeholder="Jelaskan kebutuhan jasa yang Anda inginkan..."
-                    required
-                ></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="requirements" class="form-label">Deskripsi Kebutuhan <span class="text-danger">*</span></label>
+                    <textarea
+                        id="requirements"
+                        name="requirements"
+                        class="form-control @error('requirements') is-invalid @enderror"
+                        rows="5"
+                        placeholder="Contoh: Tolong buatkan desain dari foto terlampir untuk dijadikan sablon baju dengan gaya ilustrasi vektor..."
+                        required
+                        autofocus
+                    >{{ old('requirements') }}</textarea>
+                    
+                    {{-- Pesan Error Spesifik --}}
+                    @error('requirements')
+                        <span class="error-msg">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <div class="form-group">
-                <label for="deadline">Deadline</label>
-                <!-- Menambahkan input date yang sebelumnya hilang -->
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    class="form-control"
-                    required
-                >
-            </div>
+                <div class="form-group">
+                    <label for="deadline" class="form-label">Target Selesai (Deadline) <span class="text-danger">*</span></label>
+                    <input
+                        type="date"
+                        id="deadline"
+                        name="deadline"
+                        class="form-control @error('deadline') is-invalid @enderror"
+                        value="{{ old('deadline') }}"
+                        min="{{ date('Y-m-d') }}" 
+                        required
+                    >
+                    <small class="text-muted">Pilih tanggal kapan kamu membutuhkan proyek ini selesai.</small>
+                    
+                    @error('deadline')
+                        <span class="error-msg">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <div class="form-group">
-                <label for="notes">Catatan (Opsional)</label>
-                <textarea
-                    id="notes"
-                    name="notes"
-                    class="form-control"
-                    rows="3"
-                    placeholder="Tambahkan catatan khusus jika ada..."
-                ></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="notes" class="form-label">Catatan Tambahan <span class="text-muted">(Opsional)</span></label>
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        class="form-control @error('notes') is-invalid @enderror"
+                        rows="3"
+                        placeholder="Masukkan link Google Drive berisi file aset, referensi warna, dll..."
+                    >{{ old('notes') }}</textarea>
+                    
+                    @error('notes')
+                        <span class="error-msg">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <button type="submit" class="btn">Buat Order</button>
-        </form>
+                <div class="checkout-actions">
+                    <a href="{{ url('/services/' . $service->id) }}" class="btn btn-outline">Batal</a>
+                    <button type="submit" class="btn btn-primary">Konfirmasi & Pesan Jasa</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
-
 @endsection
