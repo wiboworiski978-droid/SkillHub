@@ -37,6 +37,8 @@
     <a href="/profile">
         Profile
     </a>
+    
+    <a href="/orders/history">Riwayat Order</a>
 
     <form method="POST" action="/logout" style="display: inline;">
         @csrf

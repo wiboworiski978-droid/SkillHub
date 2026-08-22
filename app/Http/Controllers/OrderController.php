@@ -525,4 +525,22 @@ class OrderController extends Controller
             'Order berhasil diselesaikan'
         );
     }
+
+    //frontend riwayat order
+    public function webHistory() {
+        $orders = Order::with([
+            'service.user',
+            'service.category'
+        ])
+        ->where('buyer_id', session('user_id'))
+        ->whereIn('status', [
+            'complete',
+            'rejected',
+            'cancelled'
+        ])
+        ->latest()
+        ->get();
+
+        return view('order.history', compact('orders'));
+    }
 }

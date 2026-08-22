@@ -38,6 +38,9 @@ Route::post('/orders/incoming/{id}/start', [OrderController::class, 'webStartOrd
 //selesaikan order
 Route::post('/orders/incoming/{id}/complete', [OrderController::class, 'webCompleteOrder']);
 
+//riwayat order
+Route::get('/orders/history', [OrderController::class, 'webHistory']);
+
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 

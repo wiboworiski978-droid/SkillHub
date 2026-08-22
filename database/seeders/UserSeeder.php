@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'school' => 'SkillHub',
         ]);
 
-                User::create([
+        User::create([
             'username' => 'user',
             'password' => Hash::make('user123'),
             'role' => 'user',
