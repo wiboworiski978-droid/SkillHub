@@ -233,4 +233,14 @@ class ServiceController extends Controller
 
         return view('services.show', compact('service'));
     }
+
+    //frontend jasa milik user
+    public function myService() {
+        $services = Service::with(['category'])
+            ->where('user_id', session('user_id'))
+            ->latest()
+            ->get();
+
+        return view('services.my-services', compact('services'));
+    }
 }

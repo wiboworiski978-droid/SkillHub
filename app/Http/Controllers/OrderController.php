@@ -541,6 +541,6 @@ class OrderController extends Controller
         ->latest()
         ->get();
 
-        return view('order.history', compact('orders'));
+        return view('orders.history', compact('orders'));
     }
 }

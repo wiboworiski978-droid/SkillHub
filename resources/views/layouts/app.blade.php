@@ -37,8 +37,10 @@
     <a href="/profile">
         Profile
     </a>
-    
+
     <a href="/orders/history">Riwayat Order</a>
+
+    <a href="/my-services">Jasa Saya</a>
 
     <form method="POST" action="/logout" style="display: inline;">
         @csrf
@@ -47,6 +49,7 @@
             Logout
         </button>
     </form>
+
 
 </nav>
 

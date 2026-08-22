@@ -60,3 +60,5 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);
 //profil
 Route::get('/profile', [ProfileController::class, 'webShow']);
 
+//jasa saya
+Route::get('/my-services', [ServiceController::class, 'myService']);
