@@ -324,6 +324,24 @@
                         </a>
                     </div>
 
+                    <form
+                        method="POST"
+                        action="/services/{{ $service->id }}"
+                        style="display: inline;"
+                        onsubmit="return confirm('Yakin ingin menghapus jasa ini?')"
+                    >
+
+                    @csrf
+                    @method('DELETE')
+                    <div class="card-footer">
+                        <a class="mysrv-btn mysrv-btn-outline w-100">
+                            <button type="submit" class="btn">
+                                Hapus
+                            </button>
+                        </a>   
+                    </div>
+</form>
+
                 </div>
             @endforeach
         </div>

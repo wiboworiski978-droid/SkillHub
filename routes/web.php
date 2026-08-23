@@ -52,6 +52,8 @@ Route::post('services', [ServiceController::class, 'webStore']);
 Route::get('/services/{id}/edit', [ServiceController::class, 'webEdit']);
 Route::put('/services/{id}', [ServiceController::class, 'webUpdate']);
 
+//hapus jasa
+Route::delete('services/{id}', [ServiceController::class, 'webDestroy']);
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 

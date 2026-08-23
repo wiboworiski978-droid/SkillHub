@@ -320,4 +320,19 @@ class ServiceController extends Controller
         return redirect('/my-services')
             ->with('success', 'Jasa berhasil diperbarui');
     }
+
+    //frontend hapus jasa
+    public function webDestroy($id) {
+        $service = Service::where('user_id', session('user_id'))
+            ->find($id);
+
+        if (!$service) {
+            abort(404);
+        }
+
+        $service->delete();
+
+        return redirect('/my-services')
+            ->with('success', 'Jasa berhasil dihapus');
+    }
 }
