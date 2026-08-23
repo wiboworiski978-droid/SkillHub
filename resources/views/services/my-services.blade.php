@@ -311,6 +311,12 @@
                         </div>
                     </div>
 
+                    <div class="card-footer">
+                        <a href="/services/{{ $service->id }}/edit" class="mysrv-btn mysrv-btn-outline w-100">
+                            Edit
+                        </a>
+                    </div>
+
                     {{-- Area Tombol Bawah --}}
                     <div class="card-footer">
                         <a href="{{ url('/services/' . $service->id) }}" class="mysrv-btn mysrv-btn-outline w-100">

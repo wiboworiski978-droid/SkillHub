@@ -275,4 +275,49 @@ class ServiceController extends Controller
         return redirect('/my-services')
             ->with('success', 'Jasa berhasil dibuat');
     }
+
+    //frontend form edit jasa
+    public function webEdit($id) {
+        $service = Service::where('user_id', session('user_id'))
+            ->find($id);
+
+        if (!$service) {
+            abort(404);
+        }
+
+        $categories = Category::all();
+
+        return view('services.edit', compact('service', 'categories'));
+    }
+
+    //frontend menyimpan perubahan jasa
+    public function webUpdate(Request $request, $id) {
+        $service = Service::where('user_id', session('user_id'))
+            ->find($id);
+
+        if (!$service) {
+            abort(404);
+        }
+
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'estimated_days' => 'required|integer|min:1',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $service->update([
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'estimated_days' => $request->estimated_days,
+            'status' => $request->status,
+        ]);
+
+        return redirect('/my-services')
+            ->with('success', 'Jasa berhasil diperbarui');
+    }
 }

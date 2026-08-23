@@ -48,6 +48,10 @@ Route::get('/my-services', [ServiceController::class, 'myService']);
 Route::get('/services/create', [ServiceController::class, 'webCreate']);
 Route::post('services', [ServiceController::class, 'webStore']);
 
+//edit jasa
+Route::get('/services/{id}/edit', [ServiceController::class, 'webEdit']);
+Route::put('/services/{id}', [ServiceController::class, 'webUpdate']);
+
 // Detail Jasa
 Route::get('/services/{id}', [ServiceController::class, 'webShow']);
 
