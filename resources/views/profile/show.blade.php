@@ -126,6 +126,12 @@
 }
 </style>
 <div class="profile-container">
+
+@if (session('success'))
+    <div class="success-message">
+        {{ session('success') }}
+    </div>
+@endif
     
     <div class="profile-header-title">
         <h1>Profile Saya</h1>

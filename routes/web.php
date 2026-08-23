@@ -14,6 +14,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/login', [AuthController::class, 'webLogin']);
 
+//Register
+Route::get('/register', [AuthController::class, 'showRegister']);
+Route::post('/register', [AuthController::class, 'webRegister']);
 // Logout
 Route::post('/logout', [AuthController::class, 'webLogout']);
 
@@ -73,3 +76,8 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'webCancel']);
 //profil
 Route::get('/profile', [ProfileController::class, 'webShow']);
 
+//edit profile
+Route::get('/profile/edit', [ProfileController::class, 'webEdit']);
+
+//update profile
+Route::put('/profile/edit', [ProfileController::class, 'webUpdate']);

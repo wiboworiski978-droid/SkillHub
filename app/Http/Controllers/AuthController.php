@@ -64,12 +64,34 @@ class AuthController extends Controller
         ]);
     }
 
-    //frontend
+    //frontend login
     public function showLogin()
     {
          return view('auth.login');
     }
-//frontend login
+
+    //frontend register
+    public function showRegister() {
+        return view('auth.register');
+    }
+
+    //proses register frontend
+    public function webRegister(Request $request) {
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role' => 'user',
+        ]);
+
+        return redirect('/login')
+            ->with('success', 'Register berhasil. Silakan login');
+    }
+    //frontend proses login
     public function webLogin(Request $request)
     {
         $request->validate([
