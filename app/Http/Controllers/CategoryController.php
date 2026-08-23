@@ -106,4 +106,102 @@ class CategoryController extends Controller
             'message' => 'Kategori berhasil dihapus'
         ]);
     }
+
+    //frontend melihat semua kategori
+    public function webIndex() 
+    {
+        $this->checkAdmin();
+
+        $categories = Category::latest()->get();
+
+        return view('categories.index', compact('categories'));
+    }
+
+    //frontend form tambah kategori
+    public function webCreate()
+    {
+        $this->checkAdmin();
+        return view('categories.create');    
+    }
+
+    //frontend menyimpan kategori
+    public function webStore(Request $request)
+    {
+        $this->checkAdmin();
+
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
+
+        Category::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect('/categories')
+            ->with('success', 'Kategori berhasil ditambahkan');
+    }
+
+    //frontend form edit kategori
+    public function webEdit($id)
+    {
+        $this->checkAdmin();
+
+        $category = Category::find($id);
+
+        if (!$category) {
+            abort(404);
+        }
+
+        return view('categories.edit', compact('category'));
+    }
+
+    //frontend update kategori
+    public function webUpdate(Request $request, $id)
+    {
+        $this->checkAdmin();
+
+        $category = Category::find($id);
+
+        if (!$category) {
+            abort(404);
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name' . $id,
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect('/categories')
+            ->with('success', 'Kategori berhasil diperbarui');
+    }
+
+    //frontend hapus kategori
+    public function weDestroy($id)
+    {
+        $this->checkAdmin();
+
+        $category = Category::find($id);
+
+        if (!$category) {
+            abort(404);
+        }
+
+        $category->delete();
+
+        return redirect('/categories')
+            ->with('success', 'Kategori berhasil dihapus');
+    }
+
+    // frontend cek admin
+    private function checkAdmin()
+    {
+        $user = \App\Models\User::find(session('user_id'));
+
+        if (!$user || $user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini');
+        }
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
@@ -81,3 +82,16 @@ Route::get('/profile/edit', [ProfileController::class, 'webEdit']);
 
 //update profile
 Route::put('/profile/edit', [ProfileController::class, 'webUpdate']);
+
+// CRUD kategori hanya admin
+Route::get('/categories', [CategoryController::class, 'webIndex']);
+
+Route::get('/categories/create', [CategoryController::class, 'webCreate']);
+
+Route::post('/categories', [CategoryController::class, 'webStore']);
+
+Route::get('/categories/{id}/edit', [CategoryController::class, 'webEdit']);
+
+Route::put('/categories/{id}', [CategoryController::class, 'webUpdate']);
+
+Route::delete('/categories/{id}', [CategoryController::class, 'webDestroy']);

@@ -109,44 +109,31 @@ main {
 <body>
 
 <nav>
+    <!-- Brand / Logo -->
+    <a href="/">SkillHub</a>
 
-    <a href="/">
-        SkillHub
-    </a>
+    <!-- Menu Utama -->
+    <a href="/">Home</a>
+    <a href="/services">Explore Jasa</a>
 
-    <a href="/">
-        Home
-    </a>
-
-    <a href="/services">
-        Explore Jasa
-    </a>
-
-    <a href="/orders">
-        Order Saya
-    </a>
-
-    <a href="/orders/incoming">
-        Order Masuk
-    </a>
-
-    <a href="/profile">
-        Profile
-    </a>
-
+    <!-- Aktivitas Jasa & Transaksi Pengguna -->
+    <a href="/my-services">Jasa Saya</a>
+    <a href="/orders">Order Saya</a>
+    <a href="/orders/incoming">Order Masuk</a>
     <a href="/orders/history">Riwayat Order</a>
 
-    <a href="/my-services">Jasa Saya</a>
+    <a href="/profile">Profile</a>
 
+    <!-- Menu Khusus Admin -->
+    @if (session('role') === 'admin')
+        <a href="/categories">Kelola Kategori</a>
+    @endif
+
+    <!-- Tombol Logout (Didorong ke paling kanan dengan CSS flexbox margin-left: auto) -->
     <form method="POST" action="/logout" style="display: inline;">
         @csrf
-
-        <button type="submit">
-            Logout
-        </button>
+        <button type="submit">Logout</button>
     </form>
-
-
 </nav>
 
 <main>
