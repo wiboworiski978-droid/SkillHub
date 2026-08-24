@@ -4,65 +4,182 @@
 
 @section('content')
 <style>
-    /* --- Explore Container --- */
+    /* =========================================
+   STYLE HALAMAN EXPLORE JASA
+   ========================================= */
+
+/* --- Container Utama --- */
 .explore-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
+    max-width: 1100px;
+    margin: 0 auto 80px auto;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* --- Explore Header & Search Bar --- */
+/* --- Header & Search Bar --- */
 .explore-header {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 40px 20px;
-    margin-bottom: 40px;
-    margin-top: 24px;
+    background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+    padding: 60px 20px;
     text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border: 1px solid #f3f4f6;
+    color: #ffffff;
+    margin-bottom: 40px;
+    border-radius: 0 0 24px 24px; /* Lengkungan manis di bawah */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .explore-header h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: #111827;
-    margin-bottom: 12px;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
 }
 
 .explore-header p {
-    color: #6b7280;
-    margin-bottom: 24px;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
+    color: #e0e7ff;
+    margin: 0 0 32px 0;
 }
 
-/* --- Form Pencarian --- */
+/* Form Pencarian */
 .search-form {
     display: flex;
-    max-width: 600px;
-    margin: 0 auto;
-    gap: 12px;
+    gap: 8px;
+    background-color: #ffffff;
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .search-form input[type="text"] {
     flex-grow: 1;
-    padding: 12px 20px;
-    border: 1.5px solid #d1d5db;
-    border-radius: 8px;
+    border: none;
+    padding: 12px 16px;
     font-size: 1rem;
+    border-radius: 8px;
     outline: none;
-    transition: all 0.2s;
+    background-color: transparent;
+    color: #111827;
 }
 
-.search-form input[type="text"]:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+.search-form input[type="text"]::placeholder {
+    color: #9ca3af;
 }
 
-.search-form .btn-primary {
-    background-color: #4f46e5;
-    color: white;
-    padding: 12px 32px;
+.search-form .btn {
+    padding: 12px 24px;
+    white-space: nowrap;
+}
+
+/* --- Explore Body & Grid --- */
+.explore-body {
+    padding: 0 20px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* --- Service Card --- */
+.service-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Area Gambar Card */
+.service-image-placeholder {
+    height: 180px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    position: relative;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Badge Kategori */
+.category-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: rgba(17, 24, 39, 0.8);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+}
+
+/* Konten Text Card */
+.service-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.service-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.service-description {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    flex-grow: 1;
+}
+
+/* Harga */
+.service-meta {
+    margin-bottom: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.service-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #10b981; /* Warna Hijau Emerald */
+    display: block;
+}
+
+/* Tombol Block (Penuhi Lebar) */
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- Empty State --- */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9fafb;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    color: #6b7280;
+    font-size: 1.05rem;
 }
 
 /* --- Pagination (Opsional) --- */
@@ -72,13 +189,32 @@
     justify-content: center;
 }
 
-/* Jika kamu menggunakan Tailwind/Bootstrap bawaan pagination Laravel, 
-   kamu bisa menyesuaikan warnanya di sini jika perlu */
+/* --- Responsif (HP) --- */
+@media (max-width: 640px) {
+    .explore-header {
+        padding: 40px 16px;
+        border-radius: 0 0 16px 16px;
+    }
+    
+    .explore-header h1 {
+        font-size: 2rem;
+    }
 
-/* --- Catatan Tambahan --- */
-/* Class seperti .services-grid, .service-card, .btn, dan .empty-state 
-   sudah ada di CSS Home sebelumnya, jadi kamu tidak perlu menulis ulang 
-   jika berada dalam file style.css yang sama! */
+    .search-form {
+        flex-direction: column;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .search-form input[type="text"] {
+        background-color: #ffffff;
+    }
+    
+    .search-form .btn {
+        width: 100%;
+    }
+}
 </style>
 <div class="explore-container">
 
