@@ -14,6 +14,7 @@ class Service extends Model
         'category_id',
         'title',
         'description',
+        'thumbnail',
         'price',
         'estimated_days',
         'thumbnail',

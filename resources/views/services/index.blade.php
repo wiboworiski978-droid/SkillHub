@@ -5,7 +5,7 @@
 @section('content')
 <style>
     /* =========================================
-   STYLE HALAMAN EXPLORE JASA
+   STYLE LENGKAP HALAMAN EXPLORE JASA
    ========================================= */
 
 /* --- Container Utama --- */
@@ -22,7 +22,7 @@
     text-align: center;
     color: #ffffff;
     margin-bottom: 40px;
-    border-radius: 0 0 24px 24px; /* Lengkungan manis di bawah */
+    border-radius: 0 0 24px 24px; /* Lengkungan di bagian bawah */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
@@ -102,15 +102,30 @@
     box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Area Gambar Card */
+/* --- Area Gambar & Thumbnail --- */
 .service-image-placeholder {
     height: 180px;
     background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
     position: relative;
     border-bottom: 1px solid #e5e7eb;
+    overflow: hidden; /* Penting agar gambar tidak keluar kotak */
 }
 
-/* Badge Kategori */
+.service-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Penting agar gambar proporsional (tidak gepeng) */
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Efek zoom tipis saat card di-hover */
+.service-card:hover .service-thumbnail {
+    transform: scale(1.05); 
+}
+
+/* Badge Kategori di atas gambar */
 .category-badge {
     position: absolute;
     top: 16px;
@@ -122,9 +137,10 @@
     font-size: 0.75rem;
     font-weight: 600;
     backdrop-filter: blur(4px);
+    z-index: 2; /* Memastikan badge selalu di atas gambar */
 }
 
-/* Konten Text Card */
+/* --- Konten Text Card --- */
 .service-info {
     padding: 20px;
     display: flex;
@@ -145,10 +161,10 @@
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0 0 20px 0;
-    flex-grow: 1;
+    flex-grow: 1; /* Mendorong harga dan tombol ke bawah */
 }
 
-/* Harga */
+/* --- Harga --- */
 .service-meta {
     margin-bottom: 16px;
     padding-top: 16px;
@@ -158,11 +174,11 @@
 .service-price {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #10b981; /* Warna Hijau Emerald */
+    color: #10b981; /* Warna Hijau */
     display: block;
 }
 
-/* Tombol Block (Penuhi Lebar) */
+/* Tombol Block (Penuhi Lebar Card) */
 .btn-block {
     display: block;
     width: 100%;
@@ -181,15 +197,12 @@
     color: #6b7280;
     font-size: 1.05rem;
 }
-
-/* --- Pagination (Opsional) --- */
-.pagination-wrapper {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
 }
 
-/* --- Responsif (HP) --- */
+/* --- Responsif (Mobile) --- */
 @media (max-width: 640px) {
     .explore-header {
         padding: 40px 16px;
@@ -224,7 +237,7 @@
             <h1>Explore Jasa</h1>
             <p>Temukan talenta dan jasa profesional yang sesuai dengan kebutuhanmu.</p>
             
-            {{-- Form Pencarian (Opsional tapi sangat disarankan untuk UX) --}}
+            {{-- Form Pencarian --}}
             <form action="{{ url('/services') }}" method="GET" class="search-form">
                 <input 
                     type="text" 
@@ -240,20 +253,34 @@
     {{-- Daftar Jasa --}}
     <div class="explore-body">
         <div class="services-grid">
-            {{-- Menggunakan @forelse untuk menangani kondisi jika data kosong --}}
+            
             @forelse($services as $service)
                 <div class="service-card">
                     
-                    {{-- Placeholder Gambar dengan Badge Kategori --}}
+                    {{-- Area Gambar Jasa (Diperbaiki) --}}
                     <div class="service-image-placeholder">
-                        {{-- Adaptif: Mengambil relasi category->name (seperti di Home) atau field kategori --}}
-                        <span class="category-badge">
-                            {{ $service->category->name ?? $service->kategori ?? 'Umum' }}
-                        </span>
+                        
+                        {{-- Menampilkan gambar jika ada --}}
+                        @if ($service->thumbnail)
+                            <img
+                                src="{{ asset('storage/' . $service->thumbnail) }}"
+                                alt="{{ $service->title ?? 'Thumbnail Jasa' }}"
+                                class="service-thumbnail"
+                            >
+                        @endif
+
+                        {{-- Menampilkan Badge Kategori --}}
+                        @if ($service->category)
+                            <span class="category-badge">
+                                {{ $service->category->name }}
+                            </span>
+                        @else 
+                            <span class="category-badge">Umum</span>
+                        @endif
+
                     </div>
 
                     <div class="service-info">
-                        {{-- Adaptif: Menggunakan title atau nama_jasa --}}
                         <h3>{{ $service->title ?? $service->nama_jasa ?? 'Nama Jasa Tidak Tersedia' }}</h3>
 
                         <p class="service-description">
@@ -266,21 +293,23 @@
                             </span>
                         </div>
 
-                        {{-- Tombol Lihat Detail --}}
                         <a href="{{ url('/services/' . $service->id) }}" class="btn btn-outline btn-block">
                             Lihat Detail
                         </a>
                     </div>
                 </div>
             @empty
-                {{-- Tampilan jika tabel kosong atau hasil pencarian tidak ditemukan --}}
+                
+                {{-- Empty State --}}
                 <div class="empty-state">
+                    <div class="empty-icon">🔍</div>
                     <p>Maaf, belum ada jasa yang tersedia atau sesuai dengan pencarianmu.</p>
                 </div>
+
             @endforelse
         </div>
 
-        {{-- Pagination (Akan muncul jika kamu menggunakan ->paginate() di Controller) --}}
+        {{-- Pagination --}}
         @if(method_exists($services, 'links'))
             <div class="pagination-wrapper">
                 {{ $services->links() }}

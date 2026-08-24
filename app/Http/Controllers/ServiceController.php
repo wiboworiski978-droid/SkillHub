@@ -15,15 +15,24 @@ class ServiceController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'price' => 'required|numeric|min:0',
             'estimated_days' => 'required|integer|min:1',
         ]);
+
+        $thumbnail = null;
+        
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail')
+                ->store('services', 'public');
+        }
 
         $service = Service::create([
             'user_id' => $request->user()->id,
             'category_id' => $request->category_id,
             'title' => $request->title,
             'description' => $request->description,
+            'thumbnail' => $thumbnail,
             'price' => $request->price,
             'estimated_days' =>$request->estimated_days,
             'status' => 'active',
@@ -258,21 +267,29 @@ class ServiceController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'price' => 'required|numeric|min:0',
             'estimated_days' => 'required|integer|min:1',
         ]);
 
-        Service::create([
+        $thumbnail = null;
+
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail')
+                ->store('services', 'public');
+        }
+        $service = Service::create([
             'user_id' => session('user_id'),
             'category_id' => $request->category_id,
             'title' => $request->title,
             'description' => $request->description,
+            'thumbnail' => $thumbnail,
             'price' => $request->price,
             'estimated_days' => $request->estimated_days,
             'status' => 'active',
         ]);
 
-        return redirect('/my-services')
+        return redirect('/services/' . $service->id)
             ->with('success', 'Jasa berhasil dibuat');
     }
 

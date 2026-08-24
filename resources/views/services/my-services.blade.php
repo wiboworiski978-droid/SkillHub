@@ -5,7 +5,7 @@
 @section('content')
 <style>
     /* =========================================
-   STYLE KHUSUS HALAMAN "JASA SAYA"
+   STYLE LENGKAP HALAMAN "JASA SAYA"
    ========================================= */
 
 /* --- Container Utama --- */
@@ -54,39 +54,6 @@
     font-size: 1rem;
 }
 
-/* --- Tombol Global --- */
-.mysrv-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    box-sizing: border-box;
-}
-
-.mysrv-btn-primary {
-    background-color: #4f46e5;
-    color: #ffffff;
-}
-.mysrv-btn-primary:hover { background-color: #4338ca; }
-
-.mysrv-btn-outline {
-    background-color: transparent;
-    color: #4f46e5;
-    border: 1.5px solid #4f46e5;
-}
-.mysrv-btn-outline:hover {
-    background-color: #4f46e5;
-    color: #ffffff;
-}
-.w-100 { width: 100%; }
-.mt-4 { margin-top: 24px; }
-
 /* --- Grid System --- */
 .mysrv-grid {
     display: grid;
@@ -94,7 +61,7 @@
     gap: 24px;
 }
 
-/* --- Service Card (Sangat Rapi & Presisi) --- */
+/* --- Service Card Utama --- */
 .mysrv-card {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
@@ -111,25 +78,22 @@
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
 }
 
-/* --- Area Gambar Card --- */
+/* --- Area Gambar & Thumbnail --- */
 .card-image-area {
     height: 160px;
     background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
     position: relative;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.badge-category {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    background-color: rgba(17, 24, 39, 0.75);
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
+.mysrv-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Menjaga agar gambar tidak gepeng */
+    display: block;
 }
 
+/* --- Badge Status (Aktif/Nonaktif) --- */
 .badge-status {
     position: absolute;
     top: 16px;
@@ -139,14 +103,15 @@
     font-size: 0.75rem;
     font-weight: 700;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 2;
 }
 .status-active { background-color: #10b981; color: white; }
 .status-inactive { background-color: #6b7280; color: white; }
 
-/* --- Area Konten Card --- */
+/* --- Area Konten Teks --- */
 .card-content {
     padding: 24px 24px 16px 24px;
-    flex-grow: 1; /* Memastikan konten merenggang agar footer selalu di bawah */
+    flex-grow: 1; /* Mendorong footer agar selalu di bawah */
     display: flex;
     flex-direction: column;
 }
@@ -164,10 +129,10 @@
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0 0 20px 0;
-    flex-grow: 1; /* Mendorong harga ke bawah jika deskripsi pendek */
+    flex-grow: 1;
 }
 
-/* --- Stats (Harga & Hari) --- */
+/* --- Statistik (Harga & Hari) --- */
 .card-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -198,12 +163,69 @@
 }
 .text-green { color: #10b981; }
 
-/* --- Footer Card --- */
+/* --- Area Footer & Tombol Aksi --- */
 .card-footer {
     padding: 0 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- Empty State --- */
+.action-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+/* Utilitas Tata Letak Tombol */
+.w-100 { width: 100%; box-sizing: border-box; }
+.flex-1 { flex: 1; }
+.mb-12 { margin-bottom: 12px; }
+.m-0 { margin: 0; }
+.text-center { text-align: center; }
+
+/* --- Desain Tombol Global Jasa Saya --- */
+.mysrv-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.mysrv-btn-primary {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+.mysrv-btn-primary:hover { background-color: #4338ca; }
+
+.mysrv-btn-outline {
+    background-color: transparent;
+    color: #4f46e5;
+    border: 1.5px solid #4f46e5;
+}
+.mysrv-btn-outline:hover {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+
+/* Tombol Bahaya (Hapus) */
+.mysrv-btn-danger {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: 1.5px solid #ef4444;
+}
+.mysrv-btn-danger:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+/* --- Tampilan Kosong (Empty State) --- */
 .mysrv-empty {
     text-align: center;
     background-color: #f9fafb;
@@ -227,16 +249,18 @@
     margin: 0 auto;
     line-height: 1.5;
 }
+.mt-4 { margin-top: 24px; }
 
-/* --- Responsif (HP) --- */
+/* --- Responsif (Layar HP) --- */
 @media (max-width: 640px) {
     .mysrv-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
     }
-    .header-action, .mysrv-btn {
+    .header-action, .mysrv-btn-primary {
         width: 100%;
+        text-align: center;
     }
 }
 </style>
@@ -283,7 +307,13 @@
                     
                     {{-- Area Gambar & Badge --}}
                     <div class="card-image-area">
-                        <div class="badge-category">{{ $service->category->name }}</div>
+                        @if ($service->thumbnail)
+                            <img
+                                src="{{ asset('storage/' . $service->thumbnail) }}"
+                                alt="{{ $service->title }}"
+                                class="mysrv-thumbnail"
+                            >
+                        @endif
                         
                         @if (strtolower($service->status) === 'active')
                             <div class="badge-status status-active">Aktif</div>
@@ -311,36 +341,35 @@
                         </div>
                     </div>
 
+                    {{-- Area Tombol Bawah (Sudah Diperbaiki) --}}
                     <div class="card-footer">
-                        <a href="/services/{{ $service->id }}/edit" class="mysrv-btn mysrv-btn-outline w-100">
-                            Edit
-                        </a>
-                    </div>
-
-                    {{-- Area Tombol Bawah --}}
-                    <div class="card-footer">
-                        <a href="{{ url('/services/' . $service->id) }}" class="mysrv-btn mysrv-btn-outline w-100">
+                        
+                        {{-- Tombol Lihat Detail (Lebar Penuh) --}}
+                        <a href="{{ url('/services/' . $service->id) }}" class="mysrv-btn mysrv-btn-outline w-100 text-center mb-12">
                             Lihat Detail
                         </a>
-                    </div>
 
-                    <form
-                        method="POST"
-                        action="/services/{{ $service->id }}"
-                        style="display: inline;"
-                        onsubmit="return confirm('Yakin ingin menghapus jasa ini?')"
-                    >
+                        {{-- Baris Tombol Aksi (Edit & Hapus Sejajar) --}}
+                        <div class="action-row">
+                            <a href="{{ url('/services/' . $service->id . '/edit') }}" class="mysrv-btn mysrv-btn-outline flex-1 text-center">
+                                Edit
+                            </a>
 
-                    @csrf
-                    @method('DELETE')
-                    <div class="card-footer">
-                        <a class="mysrv-btn mysrv-btn-outline w-100">
-                            <button type="submit" class="btn">
-                                Hapus
-                            </button>
-                        </a>   
+                            <form 
+                                method="POST" 
+                                action="{{ url('/services/' . $service->id) }}" 
+                                class="flex-1 m-0"
+                                onsubmit="return confirm('Yakin ingin menghapus jasa ini?')"
+                            >
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="mysrv-btn mysrv-btn-danger w-100">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                        
                     </div>
-</form>
 
                 </div>
             @endforeach

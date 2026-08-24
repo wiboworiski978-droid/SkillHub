@@ -4,81 +4,49 @@
 
 @section('content')
 <style>
-    /* --- Home Container --- */
+    /* =========================================
+   STYLE HALAMAN HOME (BERANDA)
+   ========================================= */
+
 .home-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 40px;
+    max-width: 1100px;
+    margin: 0 auto 80px auto;
+    padding: 20px;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* --- Hero Section --- */
+/* --- 1. Hero Section --- */
 .hero-section {
-    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-    border-radius: 16px;
-    padding: 60px 20px;
+    background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+    border-radius: 24px;
+    padding: 80px 20px;
     text-align: center;
-    color: white;
-    margin-top: 24px;
-    margin-bottom: 48px;
+    color: #ffffff;
     box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+    margin-bottom: 60px;
+}
+
+.hero-content {
+    max-width: 650px;
+    margin: 0 auto;
 }
 
 .hero-content h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 16px;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 .hero-content p {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #e0e7ff;
-    margin-bottom: 32px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 0 32px 0;
+    line-height: 1.6;
 }
 
-/* --- Buttons --- */
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    border: none;
-}
-
-.btn-primary {
-    background-color: #ffffff;
-    color: #4f46e5;
-}
-
-.btn-primary:hover {
-    background-color: #f3f4f6;
-    transform: translateY(-2px);
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: #4f46e5;
-    border: 2px solid #4f46e5;
-}
-
-.btn-outline:hover {
-    background-color: #4f46e5;
-    color: #ffffff;
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
-}
-
-/* --- Services Section --- */
+/* --- 2. Services Section (Jasa Terbaru) --- */
 .services-section {
     margin-bottom: 60px;
 }
@@ -88,65 +56,73 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 12px;
 }
 
 .section-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: #111827;
+    margin: 0;
 }
 
 .view-all {
+    font-weight: 600;
     color: #4f46e5;
     text-decoration: none;
-    font-weight: 600;
+    transition: color 0.2s;
 }
 
 .view-all:hover {
-    text-decoration: underline;
+    color: #312e81;
 }
 
-/* Grid Layout untuk Card */
+/* Grid & Card (Mengadopsi gaya modern) */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
 }
 
-/* Service Card Design */
 .service-card {
-    background: #ffffff;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
 .service-image-placeholder {
-    height: 160px;
-    background-color: #e5e7eb;
+    height: 180px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    overflow: hidden; /* Mencegah gambar meluber */
 }
 
-/* Label Kategori di atas gambar */
-.category-badge {
-    background-color: rgba(17, 24, 39, 0.7);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
+/* Gambar Thumbnail */
+.mysrv-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mencegah gambar gepeng */
+    display: block;
+    transition: transform 0.3s ease;
 }
 
+.service-card:hover .mysrv-thumbnail {
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+/* Info Jasa */
 .service-info {
     padding: 20px;
     display: flex;
@@ -156,24 +132,26 @@
 
 .service-info h3 {
     font-size: 1.15rem;
+    font-weight: 700;
     color: #111827;
-    margin-bottom: 8px;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
 }
 
 .service-desc {
     color: #6b7280;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin: 0 0 20px 0;
     flex-grow: 1;
 }
 
-/* Meta Data (Author & Harga) */
+/* Meta Info (Pemilik & Harga) */
 .service-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     padding-top: 16px;
     border-top: 1px solid #f3f4f6;
 }
@@ -185,48 +163,61 @@
 }
 
 .service-price {
+    font-size: 1.1rem;
     font-weight: 700;
     color: #10b981; /* Warna hijau untuk harga */
-    font-size: 1rem;
 }
 
-/* --- Empty State --- */
-.empty-state {
-    grid-column: 1 / -1;
+/* Tombol Block di Card */
+.btn-block {
+    display: block;
+    width: 100%;
     text-align: center;
-    padding: 40px;
-    background-color: #f9fafb;
-    border-radius: 12px;
-    color: #6b7280;
-    border: 1px dashed #d1d5db;
+    box-sizing: border-box;
 }
 
-/* --- Order Section --- */
+/* --- 3. Order Section (Call to Action Bawah) --- */
+.order-section {
+    margin-top: 20px;
+}
+
 .order-card {
-    background-color: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 40px;
+    background-color: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 40px 20px;
     text-align: center;
 }
 
 .order-card h2 {
-    color: #111827;
-    margin-bottom: 8px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 12px 0;
 }
 
 .order-card p {
-    color: #6b7280;
-    margin-bottom: 24px;
+    color: #64748b;
+    margin: 0 auto 24px auto;
+    max-width: 500px;
 }
 
-.order-card .btn-primary {
-    background-color: #4f46e5;
-    color: white;
-}
+/* --- Responsif (Layar HP) --- */
+@media (max-width: 640px) {
+    .hero-section {
+        padding: 50px 16px;
+        border-radius: 16px;
+    }
 
-.order-card .btn-primary:hover {
-    background-color: #4338ca;
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
 }
 </style>
 <div class="home-container">
@@ -256,7 +247,13 @@
                 <div class="service-card">
                     {{-- Opsional: Tempat untuk gambar thumbnail jasa --}}
                     <div class="service-image-placeholder">
-                        <span class="category-badge">{{ $service->category->name ?? 'Umum' }}</span>
+                        @if ($service->thumbnail)
+                            <img
+                                src="{{ asset('storage/' . $service->thumbnail) }}"
+                                alt="{{ $service->title }}"
+                                class="mysrv-thumbnail"
+                            >
+                        @endif
                     </div>
                     
                     <div class="service-info">

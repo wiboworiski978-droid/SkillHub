@@ -177,7 +177,11 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ url('/services') }}" class="srvform-body">
+            <form
+                method="POST"
+                action="/services"
+                enctype="multipart/form-data"
+            >
             @csrf
 
             {{-- Input: Judul Jasa --}}
@@ -237,6 +241,21 @@
                     <span class="srvform-error-msg">{{ $message }}</span>
                 @enderror
             </div>
+
+        <div class="form-group">
+            <label for="thumbnail">Thumbnail</label>
+
+            <input
+                type="file"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+            <small>
+                Format: JPG, JPEG, PNG, WEBP. Maksimal 2 MB.
+            </small>
+        </div>
 
             {{-- Grid 2 Kolom untuk Harga dan Estimasi --}}
             <div class="srvform-row">

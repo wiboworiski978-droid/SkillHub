@@ -4,187 +4,247 @@
 
 @section('content')
 <style>
-    /* --- Detail Container & Layout --- */
+    /* =========================================
+   STYLE HALAMAN DETAIL JASA (SHOW)
+   ========================================= */
+
+/* --- Container Utama --- */
 .detail-container {
     max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 20px 60px;
+    margin: 40px auto 80px auto;
+    padding: 0 20px;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
+/* --- Navigasi Kembali --- */
 .back-navigation {
     margin-bottom: 24px;
 }
 
 .back-link {
-    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    color: #6b7280;
     text-decoration: none;
-    font-weight: 500;
     font-size: 0.95rem;
-    transition: color 0.2s;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .back-link:hover {
     color: #4f46e5;
 }
 
+/* --- Layout 2 Kolom --- */
 .detail-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Kiri lebih lebar (2 bagian), Kanan 1 bagian */
-    gap: 32px;
-    align-items: start; /* Penting agar sidebar bisa sticky */
+    grid-template-columns: 1fr 360px; /* Kiri flexibel, Kanan fixed 360px */
+    gap: 40px;
+    align-items: start; /* Penting agar sidebar tidak memanjang ke bawah otomatis */
 }
 
-/* --- Kolom Kiri: Detail Main --- */
+/* =========================================
+   BAGIAN KIRI (KONTEN UTAMA)
+   ========================================= */
+.detail-main {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header Detail (Judul & Badges) --- */
 .detail-header h1 {
-    font-size: 2.2rem;
-    font-weight: 700;
+    font-size: 2.25rem;
+    font-weight: 800;
     color: #111827;
-    margin-bottom: 12px;
+    margin: 0 0 16px 0;
     line-height: 1.3;
 }
 
 .detail-badges {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 24px;
 }
 
 .badge {
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
-.badge-category {
-    background-color: #e0e7ff;
-    color: #4338ca;
-}
+.badge-category { background-color: #e0e7ff; color: #4338ca; }
+.badge-active { background-color: #d1fae5; color: #047857; }
+.badge-inactive { background-color: #f3f4f6; color: #6b7280; }
 
-.badge-active {
-    background-color: #d1fae5;
-    color: #047857;
-}
-
-.badge-inactive {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
+/* --- Gambar / Thumbnail Jasa --- */
 .detail-image {
     width: 100%;
-    height: 350px;
-    background-color: #e5e7eb;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    font-size: 1.2rem;
+    aspect-ratio: 16 / 9; /* Proporsi gambar Widescreen otomatis */
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    border-radius: 16px;
+    overflow: hidden;
     margin-bottom: 32px;
+    border: 1px solid #e5e7eb;
+}
+
+.service-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Deskripsi Jasa --- */
+.detail-description {
+    color: #374151;
+    font-size: 1.05rem;
+    line-height: 1.8;
 }
 
 .detail-description h2 {
     font-size: 1.5rem;
+    font-weight: 700;
     color: #111827;
-    margin-bottom: 16px;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
 }
 
 .detail-description p {
-    font-size: 1.05rem;
-    color: #4b5563;
-    line-height: 1.7;
+    margin: 0;
 }
 
-/* --- Kolom Kanan: Sidebar & Action Card --- */
+
+/* =========================================
+   BAGIAN KANAN (SIDEBAR & CARD AKSI)
+   ========================================= */
 .detail-sidebar {
     position: sticky;
-    top: 24px; /* Card akan ikut turun (menempel di atas) saat di-scroll */
+    top: 100px; /* Menempel di layar saat di-scroll ke bawah */
 }
 
 .action-card {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 28px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
+/* --- Area Harga --- */
 .price-section {
-    margin-bottom: 20px;
+    text-align: center;
 }
 
 .price-label {
-    font-size: 0.9rem;
+    display: block;
     color: #6b7280;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
 }
 
 .price-amount {
     font-size: 2rem;
-    font-weight: 700;
-    color: #111827;
-    margin-top: 4px;
+    font-weight: 800;
+    color: #10b981; /* Warna hijau menonjol */
+    margin: 0;
 }
 
+/* --- Garis Putus-putus --- */
 .card-divider {
     border: 0;
-    border-top: 1px solid #f3f4f6;
-    margin: 20px 0;
+    border-top: 2px dashed #e5e7eb;
+    margin: 24px 0;
 }
 
+/* --- Meta Info (Estimasi & Pemilik) --- */
 .service-meta-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 28px 0;
+    margin: 0 0 32px 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
 }
 
 .service-meta-list li {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 16px;
 }
 
 .meta-icon {
     font-size: 1.5rem;
-    line-height: 1;
+    background-color: #f9fafb;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .meta-info {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 
 .meta-info strong {
-    font-size: 0.9rem;
-    color: #374151;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .meta-info span {
-    font-size: 0.95rem;
-    color: #6b7280;
+    font-size: 1rem;
+    color: #111827;
+    font-weight: 600;
 }
 
-/* Tombol Disabled */
+/* --- Tombol Aksi Pembelian --- */
+.action-buttons .btn-block {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 14px 24px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
 .btn-disabled {
-    background-color: #e5e7eb;
+    background-color: #f3f4f6;
     color: #9ca3af;
     cursor: not-allowed;
-    border: none;
+    border: 1px solid #e5e7eb;
+    font-weight: 600;
 }
 
-/* --- Responsif untuk Layar Kecil (Mobile) --- */
-@media (max-width: 768px) {
+
+/* =========================================
+   RESPONSIF (UNTUK LAYAR HP & TABLET)
+   ========================================= */
+@media (max-width: 850px) {
     .detail-layout {
-        grid-template-columns: 1fr; /* Berubah jadi 1 kolom ke bawah di HP */
+        grid-template-columns: 1fr; /* Berubah menjadi 1 kolom bersusun */
+        gap: 32px;
     }
-    
+
     .detail-sidebar {
-        position: static; /* Matikan efek sticky di HP */
-        order: -1; /* (Opsional) Membawa Action Card ke atas gambar pada tampilan HP */
+        position: static; /* Menonaktifkan efek sticky di HP */
+        order: -1; /* Trik: Membawa card harga ke atas sebelum deskripsi saat di HP */
+    }
+
+    .detail-header h1 {
+        font-size: 1.75rem;
     }
 }
 </style>
@@ -217,7 +277,13 @@
 
             {{-- Placeholder untuk Gambar/Thumbnail Jasa --}}
             <div class="detail-image">
-                <span>Gambar Jasa</span>
+                @if ($service->thumbnail)
+                <img
+                    src="{{ asset('storage/' . $service->thumbnail) }}"
+                    alt="{{ $service->title }}"
+                    class="service-thumbnail"
+                >
+                @endif
             </div>
 
             <div class="detail-description">
