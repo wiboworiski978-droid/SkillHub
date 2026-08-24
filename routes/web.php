@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminServiceController;
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
@@ -106,4 +107,10 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
 Route::get('/admin/users', [AdminUserController::class, 'index'])
     ->middleware('role:admin');
 Route::delete('/admin/users/{id}/delete', [AdminUserController::class, 'destroy'])
+    ->middleware('role:admin');
+
+//admin - kelola jasa
+Route::get('/admin/services', [AdminServiceController::class, 'index'])
+    ->middleware('role:admin');
+Route::post('/admin/services/{id}/delete', [AdminServiceController::class, 'destroy'])
     ->middleware('role:admin');
