@@ -7,6 +7,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUserController;
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
@@ -95,3 +97,13 @@ Route::get('/categories/{id}/edit', [CategoryController::class, 'webEdit']);
 Route::put('/categories/{id}', [CategoryController::class, 'webUpdate']);
 
 Route::delete('/categories/{id}', [CategoryController::class, 'webDestroy']);
+
+//dashboar admin
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('role:admin');
+
+//admin - kelola user
+Route::get('/admin/users', [AdminUserController::class, 'index'])
+    ->middleware('role:admin');
+Route::delete('/admin/users/{id}/delete', [AdminUserController::class, 'destroy'])
+    ->middleware('role:admin');
