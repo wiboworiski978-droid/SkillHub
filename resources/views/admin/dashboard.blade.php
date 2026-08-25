@@ -308,7 +308,7 @@
             </div>
         </a>
 
-        <a href="#" class="admin-menu-card">
+        <a href="/admin/orders" class="admin-menu-card">
             <div class="menu-icon">📦</div>
             <div class="menu-text">
                 <h3>Kelola Order</h3>

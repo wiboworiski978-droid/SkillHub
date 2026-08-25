@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminServiceController;
+use App\Http\Controllers\AdminOrderController;
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
@@ -113,4 +114,10 @@ Route::delete('/admin/users/{id}/delete', [AdminUserController::class, 'destroy'
 Route::get('/admin/services', [AdminServiceController::class, 'index'])
     ->middleware('role:admin');
 Route::post('/admin/services/{id}/delete', [AdminServiceController::class, 'destroy'])
+    ->middleware('role:admin');
+
+//admin - kelola orders
+Route::get('/admin/orders', [AdminOrderController::class, 'index'])
+    ->middleware('role:admin');
+Route::get('/admin/orders/{id}', [AdminOrderController::class, 'show'])
     ->middleware('role:admin');
