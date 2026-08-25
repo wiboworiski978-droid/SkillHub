@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Kelola Kategori - SkillHub')
 
 @section('content')
 <style>
     /* =========================================
-   STYLE KELOLA KATEGORI (DISEMPURNAKAN)
+   STYLE KELOLA KATEGORI (CLEAN SAAS)
    ========================================= */
 
 .cat-container {
@@ -15,100 +15,189 @@
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* --- Grid Daftar Kategori --- */
+/* --- Header Kategori --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap; /* Mencegah bentrok di layar sempit */
+    gap: 20px;
+}
+
+.header-text h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.02em;
+}
+
+.header-text p {
+    color: #64748b;
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+/* --- Grid Card Kategori --- */
 .cat-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
 }
 
-/* --- Card Kategori Presisi --- */
 .cat-card {
     background-color: #ffffff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px); /* Efek melayang tipis saat di-hover */
+    box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.08);
+    border-color: #cbd5e1;
+}
+
+/* --- Konten Info Card --- */
+.cat-info {
+    flex-grow: 1;
+    margin-bottom: 24px;
 }
 
 .cat-badge {
     display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #4338ca;
     background-color: #e0e7ff;
+    color: #4338ca;
+    font-size: 0.75rem;
+    font-weight: 700;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     margin-bottom: 12px;
-    letter-spacing: 0.03em;
 }
 
 .cat-info h3 {
+    margin: 0;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #111827;
-    margin: 0 0 24px 0;
-    word-break: break-word;
-    line-height: 1.4;
+    color: #1e293b;
 }
 
-/* --- Area Tombol Aksi Sejajar --- */
+/* --- Area Tombol Aksi (Edit & Hapus) --- */
 .cat-actions {
     display: flex;
     gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #f3f4f6;
-    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
 }
 
 .cat-form-action {
-    flex: 1;
     margin: 0;
+    flex: 1; /* Memastikan form mengambil sisa ruang yang seimbang */
 }
 
 .cat-btn-action {
-    width: 100%;
-    padding: 10px 16px !important;
-    font-size: 0.9rem !important;
-    font-weight: 600;
-    text-align: center;
-    border-radius: 8px;
     display: inline-block;
+    width: 100%;
+    text-align: center;
     box-sizing: border-box;
-}
-
-/* Tombol Bahaya (Hapus) yang Konsisten */
-.btn-danger {
-    background-color: #ef4444;
-    color: #ffffff;
-    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
 }
 
-.btn-danger:hover {
-    background-color: #dc2626;
-}
-
-/* Memperbaiki jarak tombol Outline agar sama tinggi */
+/* Varian Tombol Edit (Outline Soft Blue) */
 .cat-actions .btn-outline {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #f8fafc;
+    color: #4f46e5;
+    border-color: #e2e8f0;
+    flex: 1; /* Keseimbangan lebar tombol */
+}
+
+.cat-actions .btn-outline:hover {
+    background-color: #e0e7ff;
+    border-color: #c7d2fe;
+}
+
+/* Varian Tombol Hapus (Soft Red) */
+.cat-actions .btn-danger {
+    background-color: #fff1f2;
+    color: #e11d48;
+    border-color: #ffe4e6;
+}
+
+.cat-actions .btn-danger:hover {
+    background-color: #ffe4e6;
+    border-color: #fecdd3;
+    color: #be123c;
+}
+
+/* --- Tampilan Kosong (Empty State) --- */
+.empty-state {
+    grid-column: 1 / -1; /* Memaksa kotak berada di tengah memenuhi baris */
+    background-color: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state h3 {
+    color: #0f172a;
+    font-size: 1.25rem;
+    margin: 0 0 8px 0;
+}
+
+.empty-state p {
+    color: #64748b;
+    margin: 0 0 24px 0;
+}
+
+.mt-3 {
+    margin-top: 16px;
+}
+
+/* --- Responsif HP --- */
+@media (max-width: 640px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .header-action {
+        width: 100%;
+    }
+    
+    .header-action .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
 <div class="cat-container">
+
+    {{-- Navigasi Kembali ke Dashboard Admin --}}
+    <div style="margin-bottom: 24px;">
+        <a href="{{ url('/admin/dashboard') }}" class="back-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+            Kembali ke Dashboard
+        </a>
+    </div>
 
     {{-- Alert Success --}}
     @if (session('success'))
@@ -134,12 +223,14 @@
     <div class="cat-grid">
         @forelse ($categories as $category)
             <div class="cat-card">
+                
+                {{-- Info Kategori --}}
                 <div class="cat-info">
                     <span class="cat-badge">Kategori Jasa</span>
                     <h3>{{ $category->name }}</h3>
                 </div>
 
-                {{-- Tombol Aksi Sejajar & Rapi --}}
+                {{-- Tombol Aksi (Edit & Hapus) --}}
                 <div class="cat-actions">
                     <a href="{{ url('/categories/' . $category->id . '/edit') }}" class="btn btn-outline cat-btn-action">
                         Edit
@@ -158,8 +249,11 @@
                         </button>
                     </form>
                 </div>
+
             </div>
         @empty
+            
+            {{-- Tampilan Saat Kategori Masih Kosong --}}
             <div class="empty-state">
                 <div class="empty-icon">📂</div>
                 <h3>Belum Ada Kategori</h3>
@@ -168,6 +262,7 @@
                     + Tambah Kategori Pertama
                 </a>
             </div>
+
         @endforelse
     </div>
 

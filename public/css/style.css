@@ -74,3 +74,156 @@ main {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
     min-height: 80vh; /* Menjaga agar halaman tidak terlihat kosong jika kontennya sedikit */
 }
+
+/* =========================================
+   STYLE NAVBAR ADMIN (CLEAN & MODERN)
+   ========================================= */
+
+.admin-topbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.topbar-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Kiri: Brand & Logo --- */
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
+.brand-logo {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.brand-badge {
+    background-color: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+/* --- Kanan: Link, Profil, Logout --- */
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.topbar-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.topbar-link:hover {
+    color: #0f172a;
+}
+
+.topbar-divider {
+    width: 1px;
+    height: 24px;
+    background-color: #e2e8f0;
+    margin: 0 4px;
+}
+
+/* User Profil Mini */
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar-mini {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1px solid #e2e8f0;
+}
+
+.user-name-mini {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Tombol Logout (Tanpa Background Merah Norak) */
+.logout-form {
+    margin: 0;
+    display: flex;
+}
+
+.topbar-logout {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.topbar-logout:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+/* --- Responsif HP --- */
+@media (max-width: 640px) {
+    .hide-on-mobile {
+        display: none; /* Menyembunyikan teks di HP, menyisakan ikon/avatar saja agar tidak sempit */
+    }
+    .topbar-actions {
+        gap: 10px;
+    }
+}

@@ -179,7 +179,7 @@ class CategoryController extends Controller
     }
 
     //frontend hapus kategori
-    public function weDestroy($id)
+    public function webDestroy($id)
     {
         $this->checkAdmin();
 
