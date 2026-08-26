@@ -4,11 +4,12 @@
 
 @section('content')
 <style>
-    /* --- Order Detail Container --- */
+/* --- Order Detail Container --- */
 .order-detail-container {
     max-width: 800px;
     margin: 40px auto 80px;
     padding: 0 20px;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
 /* --- Alert Messages --- */
@@ -48,6 +49,7 @@
     font-size: 1.5rem;
     color: #111827;
     margin-bottom: 4px;
+    margin-top: 0;
 }
 
 .order-id {
@@ -57,6 +59,13 @@
 }
 
 /* --- Status Badges --- */
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
 .badge-warning { background-color: #fef3c7; color: #b45309; }
 .badge-info { background-color: #e0f2fe; color: #0369a1; }
 .badge-success { background-color: #d1fae5; color: #047857; }
@@ -104,6 +113,7 @@
     font-size: 1.1rem;
     color: #374151;
     margin-bottom: 12px;
+    margin-top: 0;
 }
 
 .brief-box {
@@ -117,26 +127,23 @@
 }
 
 .notes-box {
-    background-color: #fffbeb; /* Warna kuning sangat muda untuk catatan */
+    background-color: #fffbeb;
     border-color: #fde68a;
 }
 
 /* --- Footer & Tombol Aksi --- */
 .order-card-footer {
     padding: 24px 32px;
-    background-color: #ffffff;
+    background-color: #f9fafb;
     display: flex;
     justify-content: flex-end;
     gap: 16px;
+    align-items: center;
 }
 
-.btn-danger {
-    background-color: #ef4444;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #dc2626;
+.d-inline {
+    display: inline-block;
+    margin: 0;
 }
 
 /* --- Responsif --- */
@@ -148,15 +155,17 @@
     }
     
     .order-card-footer {
-        flex-direction: column-reverse; /* Balik urutan tombol di HP */
+        flex-direction: column-reverse;
     }
     
-    .order-card-footer .btn {
+    .order-card-footer .btn,
+    .order-card-footer form {
         width: 100%;
         text-align: center;
     }
 }
 </style>
+
 <div class="order-detail-container">
 
     {{-- Alert Success --}}
@@ -167,8 +176,8 @@
     @endif
 
     {{-- Header Navigasi --}}
-    <div class="back-navigation">
-        <a href="{{ url('/orders') }}" class="back-link">
+    <div style="margin-bottom: 24px;">
+        <a href="{{ url('/orders') }}" style="color: #6b7280; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
             &larr; Kembali ke Daftar Order
         </a>
     </div>
@@ -181,7 +190,6 @@
                 <span class="order-id">#ORD-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
             </div>
             
-            {{-- Menentukan warna badge berdasarkan status --}}
             @php
                 $statusClass = match(strtolower($order->status)) {
                     'pending' => 'badge-warning',
@@ -241,9 +249,29 @@
             @endif
         </div>
 
-        {{-- Bagian 4: Area Aksi (Tombol) --}}
+        {{-- Bagian 4: Hasil Jasa (Tampil jika order selesai & ada file) --}}
+        @if ($order->status === 'complete' && $order->result_file)
+            <div class="order-section brief-section">
+                <h3>Hasil Jasa</h3>
+                <div class="brief-box" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                    <p style="margin-top: 0; color: #166534; margin-bottom: 16px;">
+                        Penyedia jasa telah menyelesaikan pekerjaan dan mengirimkan file hasil jasa. Silakan unduh melalui tombol di bawah ini:
+                    </p>
+                    <a
+                        href="{{ asset('storage/' . $order->result_file) }}"
+                        target="_blank"
+                        class="btn btn-success"
+                        style="display: inline-block; background-color: #10b981; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;"
+                    >
+                        ↓ Download Hasil Pekerjaan
+                    </a>
+                </div>
+            </div>
+        @endif
+
+        {{-- Bagian 5: Area Aksi (Footer Tombol) --}}
         <div class="order-card-footer">
-            <a href="{{ url('/orders') }}" class="btn btn-outline">
+            <a href="{{ url('/orders') }}" class="btn btn-outline" style="color: #4b5563; text-decoration: none; font-weight: 600; padding: 10px 16px;">
                 Kembali
             </a>
 
@@ -255,40 +283,13 @@
                     onsubmit="return confirm('Apakah kamu yakin ingin membatalkan order ini? Tindakan ini tidak bisa dibatalkan.')"
                 >
                     @csrf
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger" style="background-color: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Batalkan Order
                     </button>
                 </form>
             @endif
         </div>
 
-        @if ($order->status === 'complete' && $order->result_file)
-
-    <div class="order-section">
-        <div class="brief-section">
-
-            <h3>Hasil Jasa</h3>
-
-            <div class="brief-box">
-                <p>
-                    Penyedia jasa telah menyelesaikan pekerjaan dan mengirimkan
-                    file hasil jasa.
-                </p>
-
-                <a
-                    href="{{ asset('storage/' . $order->result_file) }}"
-                    target="_blank"
-                    class="btn btn-primary"
-                >
-                    Lihat / Download Hasil
-                </a>
-            </div>
-
-        </div>
     </div>
-
-@endif
-    </div>
-
 </div>
 @endsection
