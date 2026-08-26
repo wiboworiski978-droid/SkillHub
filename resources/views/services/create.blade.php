@@ -5,30 +5,30 @@
 @section('content')
 <style>
     /* =========================================
-   STYLE KHUSUS FORMULIR (BUAT JASA)
+   STYLE LENGKAP KELOMPOK FORMULIR (SRVFORM)
    ========================================= */
 
-/* --- Wrapper Form --- */
+/* --- Wrapper Utama Form --- */
 .srvform-wrapper {
-    max-width: 750px; /* Dibuat lebih sempit agar form mudah dibaca */
+    max-width: 750px;
     margin: 40px auto 80px auto;
     padding: 0 20px;
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* --- Card Form --- */
+/* --- Kartu Form --- */
 .srvform-card {
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-    border: 1px solid #f3f4f6;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+    border: 1px solid #e2e8f0;
     overflow: hidden;
 }
 
 /* --- Header Form --- */
 .srvform-header {
     background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-    padding: 32px;
+    padding: 36px 32px;
     text-align: center;
     color: #ffffff;
 }
@@ -36,13 +36,15 @@
 .srvform-header h1 {
     margin: 0 0 8px 0;
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.02em;
 }
 
 .srvform-header p {
     margin: 0;
     color: #e0e7ff;
     font-size: 1rem;
+    line-height: 1.5;
 }
 
 /* --- Alert Error Global --- */
@@ -52,9 +54,10 @@
     color: #b91c1c;
     padding: 16px 32px;
     font-size: 0.95rem;
+    font-weight: 500;
 }
 
-/* --- Body Form --- */
+/* --- Body / Isian Form --- */
 .srvform-body {
     padding: 32px;
 }
@@ -67,22 +70,24 @@
 
 .srvform-label {
     font-weight: 600;
-    color: #374151;
+    color: #334155;
     margin-bottom: 8px;
     font-size: 0.95rem;
 }
 
-.text-danger { color: #ef4444; }
+.text-danger { 
+    color: #ef4444; 
+}
 
-/* --- Input Control --- */
+/* --- Input Teks, Select, & Textarea --- */
 .srvform-control {
     width: 100%;
     padding: 12px 16px;
-    border: 1.5px solid #d1d5db;
-    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
     font-size: 1rem;
-    color: #111827;
-    background-color: #f9fafb;
+    color: #0f172a;
+    background-color: #f8fafc;
     transition: all 0.2s ease;
     font-family: inherit;
     box-sizing: border-box;
@@ -95,23 +100,56 @@
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
 
-.srvform-control::placeholder { color: #9ca3af; }
+.srvform-control::placeholder { 
+    color: #94a3b8; 
+}
 
-/* --- Grid 2 Kolom (Harga & Hari) --- */
+/* --- Input File (Thumbnail) Khusus --- */
+.srvform-control-file {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.srvform-control-file:hover {
+    border-color: #4f46e5;
+    background-color: #f1f5f9;
+}
+
+.srvform-hint {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* --- Grid 2 Kolom (Harga & Estimasi / Skill & Sekolah) --- */
 .srvform-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-/* --- Error Messages (Validasi) --- */
-.srvform-control.is-invalid {
+/* --- Error Messages (Validasi per Input) --- */
+.srvform-control.is-invalid,
+.srvform-control-file.is-invalid {
     border-color: #ef4444;
     background-color: #fef2f2;
 }
+
 .srvform-control.is-invalid:focus {
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
+
 .srvform-error-msg {
     color: #dc2626;
     font-size: 0.85rem;
@@ -119,7 +157,7 @@
     font-weight: 500;
 }
 
-/* --- Action Buttons --- */
+/* --- Action Buttons (Tombol Bawah Form) --- */
 .srvform-actions {
     display: flex;
     justify-content: flex-end;
@@ -127,38 +165,64 @@
     gap: 16px;
     margin-top: 32px;
     padding-top: 24px;
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid #f1f5f9;
 }
 
-/* Gunakan class tombol .btn, .btn-primary, .btn-outline dari file CSS sebelumnya */
-.btn {
+/* Standar Tombol Dalam Form */
+.srvform-actions .btn {
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    border: none;
     font-size: 1rem;
+    transition: all 0.2s ease;
+    border: none;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
 }
-.btn-primary { background-color: #4f46e5; color: white; }
-.btn-primary:hover { background-color: #4338ca; }
-.btn-outline { background-color: transparent; border: 2px solid #e5e7eb; color: #4b5563; }
-.btn-outline:hover { background-color: #f3f4f6; }
 
-/* --- Responsif (Mobile) --- */
+.srvform-actions .btn-primary { 
+    background-color: #4f46e5; 
+    color: white; 
+}
+.srvform-actions .btn-primary:hover { 
+    background-color: #4338ca; 
+}
+
+.srvform-actions .btn-outline { 
+    background-color: transparent; 
+    border: 1.5px solid #cbd5e1; 
+    color: #475569; 
+}
+.srvform-actions .btn-outline:hover { 
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a; 
+}
+
+/* --- Responsif (Layar HP) --- */
 @media (max-width: 640px) {
-    .srvform-row {
-        grid-template-columns: 1fr; /* Jadi 1 kolom bersusun ke bawah di HP */
-        gap: 0;
+    .srvform-header {
+        padding: 28px 20px;
     }
     
+    .srvform-body {
+        padding: 20px;
+    }
+
+    .srvform-row {
+        grid-template-columns: 1fr; /* Berubah menjadi 1 kolom bersusun di HP */
+        gap: 0;
+    }
+
     .srvform-actions {
-        flex-direction: column-reverse; /* Tombol Batal di bawah */
+        flex-direction: column-reverse;
     }
     
     .srvform-actions .btn {
         width: 100%;
-        text-align: center;
     }
 }
 </style>
@@ -170,18 +234,19 @@
             <p>Tawarkan keahlianmu dan mulai terima pesanan dari klien.</p>
         </div>
 
-        {{-- Menampilkan alert error global (Opsional jika form gagal) --}}
+        {{-- Menampilkan alert error global --}}
         @if ($errors->any())
             <div class="srvform-alert-danger">
                 <strong>Oops!</strong> Ada beberapa data yang belum sesuai. Silakan periksa kembali form di bawah.
             </div>
         @endif
 
-            <form
-                method="POST"
-                action="/services"
-                enctype="multipart/form-data"
-            >
+        <form
+            method="POST"
+            action="{{ url('/services') }}"
+            enctype="multipart/form-data"
+            class="srvform-body"
+        >
             @csrf
 
             {{-- Input: Judul Jasa --}}
@@ -242,23 +307,27 @@
                 @enderror
             </div>
 
-        <div class="form-group">
-            <label for="thumbnail">Thumbnail</label>
-
-            <input
-                type="file"
-                id="thumbnail"
-                name="thumbnail"
-                accept="image/jpeg,image/png,image/webp"
-            >
-
-            <small>
-                Format: JPG, JPEG, PNG, WEBP. Maksimal 2 MB.
-            </small>
-        </div>
+            {{-- Input: Thumbnail (Sudah disesuaikan stylenya) --}}
+            <div class="srvform-group">
+                <label for="thumbnail" class="srvform-label">Thumbnail Jasa</label>
+                <input
+                    type="file"
+                    id="thumbnail"
+                    name="thumbnail"
+                    class="srvform-control-file @error('thumbnail') is-invalid @enderror"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+                <small class="srvform-hint">
+                    Format: JPG, JPEG, PNG, WEBP. Maksimal 2 MB.
+                </small>
+                @error('thumbnail')
+                    <span class="srvform-error-msg">{{ $message }}</span>
+                @enderror
+            </div>
 
             {{-- Grid 2 Kolom untuk Harga dan Estimasi --}}
             <div class="srvform-row">
+                
                 {{-- Input: Harga --}}
                 <div class="srvform-group">
                     <label for="price" class="srvform-label">Harga (Rp) <span class="text-danger">*</span></label>
@@ -294,6 +363,7 @@
                         <span class="srvform-error-msg">{{ $message }}</span>
                     @enderror
                 </div>
+
             </div>
 
             {{-- Action Buttons --}}
@@ -305,6 +375,7 @@
                     Simpan & Terbitkan Jasa
                 </button>
             </div>
+            
         </form>
     </div>
 

@@ -5,8 +5,8 @@
 @section('content')
 <style>
     /* =========================================
-   STYLE HALAMAN HOME (BERANDA)
-   ========================================= */
+    STYLE HALAMAN HOME (BERANDA)
+    ========================================= */
 
 .home-container {
     max-width: 1100px;
@@ -46,6 +46,26 @@
     line-height: 1.6;
 }
 
+/* Tombol Explore Jasa diubah menjadi warna Biru Profesional */
+.hero-content .btn-explore-blue {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    border: none;
+}
+
+.hero-content .btn-explore-blue:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
 /* --- 2. Services Section (Jasa Terbaru) --- */
 .services-section {
     margin-bottom: 60px;
@@ -78,7 +98,7 @@
     color: #312e81;
 }
 
-/* Grid & Card (Mengadopsi gaya modern) */
+/* Grid & Card (Disempurnakan) */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -106,20 +126,34 @@
     background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
     position: relative;
     border-bottom: 1px solid #e5e7eb;
-    overflow: hidden; /* Mencegah gambar meluber */
+    overflow: hidden;
+}
+
+/* Fallback Art jika Thumbnail Kosong */
+.service-fallback-art {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
 }
 
 /* Gambar Thumbnail */
 .mysrv-thumbnail {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Mencegah gambar gepeng */
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
 .service-card:hover .mysrv-thumbnail {
-    transform: scale(1.05); /* Efek zoom saat hover */
+    transform: scale(1.05);
 }
 
 /* Info Jasa */
@@ -165,7 +199,7 @@
 .service-price {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #10b981; /* Warna hijau untuk harga */
+    color: #10b981;
 }
 
 /* Tombol Block di Card */
@@ -220,6 +254,7 @@
     }
 }
 </style>
+
 <div class="home-container">
 
     {{-- Hero Section --}}
@@ -227,8 +262,8 @@
         <div class="hero-content">
             <h1>Selamat datang di SkillHub</h1>
             <p>Temukan jasa profesional dan skill terbaik yang kamu butuhkan untuk proyekmu.</p>
-            {{-- Gunakan route helper. Asumsi nama route: 'services.index' --}}
-            <a href="{{ url('/services') }}" class="btn btn-primary">
+            {{-- Tombol Explore Jasa diubah menjadi biru (.btn-explore-blue) --}}
+            <a href="{{ url('/services') }}" class="btn-explore-blue">
                 Explore Jasa
             </a>
         </div>
@@ -242,10 +277,9 @@
         </div>
 
         <div class="services-grid">
-            {{-- Menggunakan @forelse lebih rapi daripada @if + @foreach --}}
             @forelse ($services as $service)
                 <div class="service-card">
-                    {{-- Opsional: Tempat untuk gambar thumbnail jasa --}}
+                    {{-- Card Jasa yang disempurnakan (Dilengkapi fallback inisial jika thumbnail kosong) --}}
                     <div class="service-image-placeholder">
                         @if ($service->thumbnail)
                             <img
@@ -253,6 +287,10 @@
                                 alt="{{ $service->title }}"
                                 class="mysrv-thumbnail"
                             >
+                        @else
+                            <div class="service-fallback-art">
+                                <span>{{ strtoupper(substr($service->title, 0, 2)) }}</span>
+                            </div>
                         @endif
                     </div>
                     
@@ -271,14 +309,13 @@
                             </span>
                         </div>
 
-                        {{-- Asumsi nama route: 'services.show' --}}
                         <a href="{{ url('/services/' . $service->id) }}" class="btn btn-outline btn-block">
                             Lihat Detail
                         </a>
                     </div>
                 </div>
             @empty
-                <div class="empty-state">
+                <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
                     <p>Belum ada jasa yang tersedia saat ini.</p>
                 </div>
             @endforelse
