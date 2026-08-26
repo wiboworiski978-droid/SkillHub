@@ -260,13 +260,18 @@
             
             {{-- Form Pencarian --}}
             <form action="{{ url('/services') }}" method="GET" class="search-form">
+
                 <input 
-                    type="text" 
-                    name="search" 
-                    placeholder="Cari jasa (misal: Pembuatan Website)..." 
-                    value="{{ request('search') }}"
+                type="text" 
+                name="search" 
+                placeholder="Cari jasa (misal: Pembuatan Website)..."
+                value="{{ request('search') }}"
                 >
-                <button type="submit" class="btn btn-primary">Cari</button>
+
+                <button type="submit" class="btn btn-primary">
+                    Cari
+                </button>
+
             </form>
         </div>
     </div>

@@ -224,11 +224,28 @@ class ServiceController extends Controller
     }
 
     //front end explore services
-    public function webIndex()
+    public function webIndex(Request $request)
     {
-        $services = Service::with(['user', 'category'])
+        $query = Service::with(['user', 'category'])
+            ->where('status', 'active');
+
+        //search berdasarkan judul atau deskripsi
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+
+            }); 
+        }
+
+        $services = $query
             ->latest()
             ->get();
+        
         return view('services.index', compact('services'));
     }
 
