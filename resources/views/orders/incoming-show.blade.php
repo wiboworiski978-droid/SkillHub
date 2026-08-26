@@ -364,14 +364,39 @@
                 @endif
 
                 {{-- Tombol Selesaikan Order --}}
-                @if ($order->status === 'in_progress')
-                    <form method="POST" action="{{ url('/orders/incoming/' . $order->id . '/complete') }}" onsubmit="return confirm('Apakah pekerjaan sudah selesai dan dikirim ke klien?')">
-                        @csrf
-                        <button type="submit" class="btn btn-success">
-                            ✅ Selesaikan Order
-                        </button>
-                    </form>
-                @endif
+@if ($order->status === 'in_progress')
+
+    <h3>Upload Hasil Jasa</h3>
+
+    <form
+        method="POST"
+        action="/orders/incoming/{{ $order->id }}/complete"
+        enctype="multipart/form-data"
+    >
+
+        @csrf
+
+        <input
+            type="file"
+            name="result_file"
+            required
+        >
+
+        <br><br>
+
+        <small>
+            Upload file hasil pekerjaan. Maksimal 10 MB.
+        </small>
+
+        <br><br>
+
+        <button type="submit" class="btn">
+            Upload & Selesaikan Order
+        </button>
+
+    </form>
+
+@endif
             </div>
         </div>
 

@@ -186,7 +186,7 @@
                 $statusClass = match(strtolower($order->status)) {
                     'pending' => 'badge-warning',
                     'accepted', 'in_progress' => 'badge-info',
-                    'completed' => 'badge-success',
+                    'complete' => 'badge-success',
                     'cancelled', 'rejected' => 'badge-danger',
                     default => 'badge-secondary',
                 };
@@ -261,6 +261,33 @@
                 </form>
             @endif
         </div>
+
+        @if ($order->status === 'complete' && $order->result_file)
+
+    <div class="order-section">
+        <div class="brief-section">
+
+            <h3>Hasil Jasa</h3>
+
+            <div class="brief-box">
+                <p>
+                    Penyedia jasa telah menyelesaikan pekerjaan dan mengirimkan
+                    file hasil jasa.
+                </p>
+
+                <a
+                    href="{{ asset('storage/' . $order->result_file) }}"
+                    target="_blank"
+                    class="btn btn-primary"
+                >
+                    Lihat / Download Hasil
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+@endif
     </div>
 
 </div>

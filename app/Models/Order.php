@@ -12,6 +12,7 @@ class Order extends Model
         'requirements',
         'deadline',
         'notes',
+        'result_file',
         'status',
     ];
 

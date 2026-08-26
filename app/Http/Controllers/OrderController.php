@@ -496,7 +496,7 @@ class OrderController extends Controller
     }
 
     //frontend penyelesaian orderan
-    public function webCompleteOrder($id)
+    public function webCompleteOrder(Request $request,$id)
     {
         $order = Order::with('service')->find($id);
 
@@ -516,14 +516,26 @@ class OrderController extends Controller
             ]);
         }
 
+        //validasi file
+        $request->validate([
+            'result_file' => 'required|file|max:10240|mimes:pdf,zip,rar,jpg,jpeg,png,doc,docx'
+        ]);
+
+        //simpan file
+        $filePath = $request->file('result_file')
+            ->store('order-result', 'public');
+
+        //simpan file + ubah status
         $order->update([
+            'result_file' => $filePath,
             'status' => 'complete'
         ]);
 
-        return back()->with(
-            'success',
-            'Order berhasil diselesaikan'
-        );
+        return redirect('/orders/incoming/' . $order->id)
+            ->with(
+                'success',
+                'Order berhasil diselesaikan dan hasil jasa berhasil diupload'
+            );
     }
 
     //frontend riwayat order
