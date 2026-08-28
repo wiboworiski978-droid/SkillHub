@@ -423,6 +423,36 @@
             </div>
         </div>
 
+        {{-- Bagian 5: File Hasil Jasa --}}
+@if (in_array($order->status, ['complete', 'completed']) && $order->result_file)
+
+    <div class="order-section">
+        <div class="brief-section">
+
+            <h3>📁 File Hasil Jasa</h3>
+
+            <div class="brief-box">
+
+                <p>
+                    <strong>File hasil:</strong>
+                    {{ basename($order->result_file) }}
+                </p>
+
+                <a
+                    href="{{ asset('storage/' . $order->result_file) }}"
+                    download
+                    class="btn btn-success"
+                >
+                     Download File
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+@endif
+
     </div>
 </div>
 @endsection
