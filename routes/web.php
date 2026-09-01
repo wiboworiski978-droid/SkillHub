@@ -113,7 +113,7 @@ Route::delete('/admin/users/{id}/delete', [AdminUserController::class, 'destroy'
 //admin - kelola jasa
 Route::get('/admin/services', [AdminServiceController::class, 'index'])
     ->middleware('role:admin');
-Route::post('/admin/services/{id}/delete', [AdminServiceController::class, 'destroy'])
+Route::delete('/admin/services/{id}/delete', [AdminServiceController::class, 'destroy'])
     ->middleware('role:admin');
 
 //admin - kelola orders
